@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geraifone - Login</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" />
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+    <!-- Login Form -->
+    <div class="container-login">
+        <form id="loginForm" class="login-form" novalidate>
+            <h2>Masuk</h2>
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" placeholder="Masukkan email" required />
+
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" placeholder="Masukkan password" required minlength="6" />
+
+            <div class="text-end">
+                <a href="forgotpassword.html">Lupa password?</a>
+            </div>
+
+            <button type="submit">Masuk</button>
+
+            <p class="register-link">Belum punya akun? <a href="register.html">Daftar</a></p>
+        </form>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

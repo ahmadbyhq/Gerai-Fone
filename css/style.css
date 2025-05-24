@@ -1,0 +1,158 @@
+:root {
+    --bg: rgb(242, 242, 242);
+    --bg_2: rgb(207, 212, 226);
+    --button: rgb(123, 130, 156);
+    --text_dark: rgb(29, 34, 43);
+    --text_light: rgb(248, 246, 255);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg);
+    color: var(--text_dark);
+}
+
+.container-login,
+.container-register,
+.container-forgot-password {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: var(--bg);
+}
+
+.login-form,
+.register-form,
+.forgotpassword-form {
+    background-color: rgb(207, 212, 226, 0.2);
+    padding: 32px 28px;
+    border: var(--bg_2) 2px solid;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-form:hover,
+.register-form:hover,
+.forgotpassword-form:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(29, 34, 43, 0.25);
+}
+
+.login-form h2,
+.register-form h2,
+.forgotpassword-form h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-style: bold;
+}
+
+.login-form label,
+.register-form label,
+.forgotpassword-form label {
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.login-form input,
+.register-form input,
+.forgotpassword-form input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid var(--bg_2);
+    border-radius: 6px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.forgotpassword-form .info-text {
+    font-size: 13px;
+    color: var(--text_dark);
+    margin-bottom: 15px;
+}
+
+.forgotpassword-form .countdown {
+    font-size: 13px;
+    color: var(--text_dark);
+    margin-bottom: 15px;
+}
+
+.forgotpassword-form .resend-link {
+    font-size: 14px;
+    color: #4a67d6;
+    text-decoration: none;
+    cursor: pointer;
+    display: none;
+    margin-bottom: 10px;
+}
+
+.text-end {
+    text-align: right;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.text-end a {
+    text-decoration: none;
+    color: #555;
+}
+
+.text-end a:hover {
+    text-decoration: underline;
+    color: #333;
+}
+
+.login-form button,
+.register-form button,
+.forgotpassword-form button {
+    padding: 12px;
+    background-color: var(--button);
+    color: var(--text_light);
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.login-form button:hover,
+.register-form button:hover,
+.forgotpassword-form button:hover {
+    background-color: #2c2c2c;
+}
+
+.register-link,
+.login-link {
+    text-align: center;
+    font-size: 14px;
+    color: #444;
+}
+
+.register-link a,
+.login-link a {
+    text-decoration: none;
+    color: #444;
+    font-weight: 500;
+    margin-left: 6px;
+}
+
+.register-link a:hover,
+.login-link a:hover {
+    text-decoration: underline;
+}
