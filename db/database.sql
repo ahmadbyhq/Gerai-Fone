@@ -16,10 +16,8 @@ CREATE TABLE kategori_produk (
 CREATE TABLE produk (
     id_produk INT AUTO_INCREMENT PRIMARY KEY,
     nama_produk VARCHAR(100) NOT NULL,
-    deskripsi_produk TEXT,
     stok INT NOT NULL,
     harga_produk DECIMAL(10, 2) NOT NULL,
-    gambar_produk VARCHAR(255),
     id_kategori INT,
     FOREIGN KEY (id_kategori) REFERENCES kategori_produk(id_kategori)
         ON DELETE CASCADE
