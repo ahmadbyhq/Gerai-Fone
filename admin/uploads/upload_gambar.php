@@ -5,8 +5,7 @@ require_once '../../authentication/auth.php';
 
 $success = $error = '';
 
-// Ambil parameter dari URL
-$kategori = isset($_GET['kategori']) ? $_GET['kategori'] : 'umum';  // default: 'umum'
+$kategori = isset($_GET['kategori']) ? $_GET['kategori'] : 'none';  
 $redirect = isset($_GET['redirect']) ? $_GET['redirect'] : null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
