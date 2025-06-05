@@ -31,7 +31,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: left;
-    padding: 20px 0;
+    padding: 15px 0;
     border-bottom: 1px solid var(--text_dark);
 }
 
@@ -50,7 +50,7 @@ body {
 }
 
 .sidebar nav {
-    margin-top: 25px;
+    margin-top: 35px;
     display: flex;
     flex-direction: column;
     gap: 7px;
@@ -123,10 +123,11 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: var(--sidebar_header);
-    padding: 5px 0px;
+    padding: 22px 0px;
 }
 
 .topbar h2 {
+    margin: 0px;
     color: var(--text_light);
     padding: 0px 35px;
     font-weight: 700;
