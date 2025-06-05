@@ -131,6 +131,11 @@ body {
     transition: background-color 0.3s ease;
 }
 
+.register-form button {
+    /* margin-top: 10px; */
+    margin-bottom: 20px;
+}
+
 .login-form button:hover,
 .register-form button:hover,
 .forgotpassword-form button:hover {
@@ -155,4 +160,10 @@ body {
 .register-link a:hover,
 .login-link a:hover {
     text-decoration: underline;
+}
+
+.login-error,
+.register-error {
+    color: red;
+    margin-bottom: 15px;
 }
