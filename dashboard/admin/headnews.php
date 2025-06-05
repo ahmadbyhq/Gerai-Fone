@@ -47,7 +47,7 @@ $resultheadnews = $conn->query("SELECT * FROM upload_gambar WHERE kategori = 'he
             <a href="../../kategoriProduk.php"><ion-icon name="albums-outline"></ion-icon> Kategori Produk</a>
             <a href="../../transaksi.php"><ion-icon name="cart-outline"></ion-icon> Transaksi</a>
             <a href="../../logproduk.php"><ion-icon name="time-outline"></ion-icon> Riwayat Log Produk</a>
-            <a href="#" class="active"><ion-icon name="images-outline"></ion-icon> headnews</a>
+            <a href="#" class="active"><ion-icon name="images-outline"></ion-icon> Headnews</a>
         </nav>
         <form action="../../logout.php" method="post" onsubmit="return confirm('Yakin ingin logout?')" style="width: 100%;">
             <button type="submit" class="logout-btn"><ion-icon name="log-out-outline"></ion-icon>Logout</button>
