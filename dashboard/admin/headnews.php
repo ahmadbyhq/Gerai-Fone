@@ -1,5 +1,6 @@
 <?php
 require_once '../../config/dbConnection.php';
+require_once(__DIR__ . '/../../authentication/auth.php');
 
 // Pagination
 $limit = 5;
@@ -42,11 +43,11 @@ $resultheadnews = $conn->query("SELECT * FROM upload_gambar WHERE kategori = 'he
             <span class="logo-text">Geraifone</span>
         </div>
         <nav>
-            <a href="../../dashboard.php"><ion-icon name="grid-outline"></ion-icon> Dashboard</a>
-            <a href="../../produk.php"><ion-icon name="bag-outline"></ion-icon> Produk</a>
-            <a href="../../kategoriProduk.php"><ion-icon name="albums-outline"></ion-icon> Kategori Produk</a>
-            <a href="../../transaksi.php"><ion-icon name="cart-outline"></ion-icon> Transaksi</a>
-            <a href="../../logproduk.php"><ion-icon name="time-outline"></ion-icon> Riwayat Log Produk</a>
+            <a href="dashboard.php"><ion-icon name="grid-outline"></ion-icon> Dashboard</a>
+            <a href="produk.php"><ion-icon name="bag-outline"></ion-icon> Produk</a>
+            <a href="kategoriProduk.php"><ion-icon name="albums-outline"></ion-icon> Kategori Produk</a>
+            <a href="transaksi.php"><ion-icon name="cart-outline"></ion-icon> Transaksi</a>
+            <a href="logproduk.php"><ion-icon name="time-outline"></ion-icon> Riwayat Log Produk</a>
             <a href="#" class="active"><ion-icon name="images-outline"></ion-icon> Headnews</a>
         </nav>
         <form action="../../logout.php" method="post" onsubmit="return confirm('Yakin ingin logout?')" style="width: 100%;">

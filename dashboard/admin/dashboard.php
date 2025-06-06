@@ -1,6 +1,6 @@
 <?php
-require_once 'config/dbConnection.php';
-//require_once 'authentication/auth.php';
+require_once(__DIR__ . '/../../config/dbConnection.php');
+require_once(__DIR__ . '/../../authentication/auth.php');
 ?>
 
 
@@ -12,15 +12,15 @@ require_once 'config/dbConnection.php';
     <title>Dashboard - Geraifone</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <link rel="icon" href="img/logo.png" type="image/png">
-    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="icon" href="../../img/logo.png" type="image/png">
+    <link rel="stylesheet" href="../../css/dashboard.css" />
 </head>
 <body>
 
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <img src="img\logo.png" alt="Logo" class="logo-img">
+                <img src="\img\logo.png" alt="Logo" class="logo-img">
                 <span class="logo-text">Geraifone</span>
             </div>
             <nav>
@@ -29,7 +29,7 @@ require_once 'config/dbConnection.php';
                 <a href="kategoriProduk.php"><ion-icon name="albums-outline"></ion-icon> Kategori Produk</a>
                 <a href="transaksi.php"><ion-icon name="cart-outline"></ion-icon> Transaksi</a>
                 <a href="logproduk.php"><ion-icon name="time-outline"></ion-icon> Riwayat Log Produk</a>
-                <a href="dashboard/admin/headnews.php"><ion-icon name="images-outline"></ion-icon> Headnews</a>
+                <a href="headnews.php"><ion-icon name="images-outline"></ion-icon> Headnews</a>
             </nav>
             <form action="logout.php" method="post" onsubmit="return confirm('Yakin ingin logout?')" style="width: 100%;">
                 <button type="submit" class="logout-btn"><ion-icon name="log-out-outline"></ion-icon>Logout</button>

@@ -1,6 +1,6 @@
 <?php
-require_once 'config/dbConnection.php';
-require_once 'authentication/auth.php';
+require_once(__DIR__ . '/../../config/dbConnection.php');
+require_once(__DIR__ . '/../../authentication/auth.php');
 ?>
 
 
@@ -14,8 +14,8 @@ require_once 'authentication/auth.php';
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <link rel="icon" href="img/logo.png" type="image/png">
-    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="icon" href="../../img/logo.png" type="image/png">
+    <link rel="stylesheet" href="../../css/dashboard.css" />
 </head>
 
 <body>
@@ -42,6 +42,7 @@ require_once 'authentication/auth.php';
                 <a href="logproduk.php">
                     <ion-icon name="time-outline"></ion-icon> Riwayat Log Produk
                 </a>
+                <a href="headnews.php"><ion-icon name="images-outline"></ion-icon> Headnews</a>
             </nav>
             <form action="logout.php" method="post" onsubmit="return confirm('Yakin ingin logout?')"
                 style="width: 100%;">
@@ -94,7 +95,7 @@ require_once 'authentication/auth.php';
 
                         <!-- Tombol Tambah Produk -->
                         <div class="col-md-2 my-0 text-end">
-                            <a href="tambahProduk.php" class="btn primary-btn add-product-btn w-100 p-2 fw-semibold">
+                            <a href="../../admin/add/addProduct.php" class="btn primary-btn add-product-btn w-100 p-2 fw-semibold">
                                 Tambah Produk
                             </a>
                         </div>
@@ -115,7 +116,7 @@ require_once 'authentication/auth.php';
                         </thead>
                         <tbody class="text-center">
                             <?php
-                            require_once 'config/dbConnection.php';
+                            // require_once 'config/dbConnection.php';
 
                             $query = mysqli_query($conn, "
                                 SELECT produk.*, kategori_produk.kategori 
@@ -142,7 +143,7 @@ require_once 'authentication/auth.php';
                                 }
 
                                 // Path gambar
-                                $gambarPath = "upload/" . ($gambar ?: "device.png");
+                                $gambarPath = "../../upload/" . ($gambar ?: "device.png");
 
                                 echo "
                                 <tr>
@@ -162,10 +163,10 @@ require_once 'authentication/auth.php';
                                     <td class='align-middle'>$stok</td>
                                     <td class='align-middle'>$status</td>
                                     <td class='align-middle'>
-                                        <a href='editProduk.php?id=$idProduk' class='btn btn-sm btn-outline-primary me-1'>
+                                        <a href='../../admin/update/updateProduct.php?id=$idProduk' class='btn btn-sm btn-outline-primary me-1'>
                                             <ion-icon name='create-outline'></ion-icon>
                                         </a>
-                                        <a href='hapusProduk.php?id=$idProduk' onclick='return confirm(\"Yakin hapus produk?\")' class='btn btn-sm btn-outline-danger'>
+                                        <a href='../../admin/delete/deleteProduct.php?id=$idProduk' onclick='return confirm(\"Yakin hapus produk?\")' class='btn btn-sm btn-outline-danger'>
                                             <ion-icon name='trash-outline'></ion-icon>
                                         </a>
                                     </td>
