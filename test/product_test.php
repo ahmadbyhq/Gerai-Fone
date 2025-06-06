@@ -1,6 +1,6 @@
 <?php
-require_once(__DIR__ . '/../../config/dbConnection.php');
-require_once(__DIR__ . '/../../authentication/auth.php');
+require_once(__DIR__ . '/../config/dbConnection.php');
+require_once(__DIR__ . '/../authentication/auth.php');
 ?>
 
 
@@ -15,7 +15,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link rel="icon" href="../img/logo.png" type="image/png">
-    <link rel="stylesheet" href="../../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
 </head>
 
 <body>
