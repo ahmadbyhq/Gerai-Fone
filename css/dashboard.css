@@ -182,6 +182,17 @@ body {
     color: var(--text_light);
 }
 
+/* .table-bordered {
+    border: 1px solid var(--text_dark);
+    border-radius: 5px;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid var(--text_dark);
+} */
+
+
 /* Responsive */
 @media (max-width: 768px) {
     .dashboard-container {

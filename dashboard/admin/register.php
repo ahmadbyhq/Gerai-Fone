@@ -36,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->execute()) {
                 $_SESSION['user_id'] = $stmt->insert_id;
                 $_SESSION['email'] = $email;
+                $_SESSION['LAST_ACTIVITY'] = time();
                 header("Location: dashboard.php");
                 exit;
             } else {
