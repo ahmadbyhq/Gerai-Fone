@@ -20,6 +20,9 @@ body {
 }
 
 .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
     background: var(--bg_2);
     width: 260px;
     padding: 0px 20px 20px 20px;
@@ -116,9 +119,13 @@ body {
 
 .main-content {
     flex-grow: 1;
+    position: relative;
 }
 
 .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;

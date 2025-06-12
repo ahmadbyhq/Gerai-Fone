@@ -58,8 +58,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                 <h2>Produk</h2>
             </div>
 
-            <div class="content-container px-4 my-5">
-                <div class="container-fluid my-4 rounded-3 shadow bg-white">
+            <div class="container-fluid sticky-top px-3 py-2 rounded-3 shadow bg-white" style="top: 70px; z-index: 999;">
                     <div class="row gy-2 px-3 py-2 align-items-center">
                         <form method="GET" id="filterForm" class="row gx-2 align-items-center">
                             <!-- Input Cari Produk -->
@@ -122,6 +121,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                     </div>
                 </div>
 
+            <div class="content-container px-4 my-5">
                 <div class="table-responsive rounded-3 overflow-hidden shadow bg-white p-4">
                     <table class="table align-middle table-striped table-hover table-bordered">
                         <thead class="table-secondary text-center align-middle">
