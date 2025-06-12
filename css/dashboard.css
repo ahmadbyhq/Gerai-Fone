@@ -182,6 +182,16 @@ body {
     color: var(--text_light);
 }
 
+.pagination .page-link {
+    color: var(--text_dark) !important;
+}
+
+.page-item.active .page-link {
+    background-color: var(--button);
+    border-color: var(--bg);
+    color: var(--text_light) !important;
+}
+
 /* .table-bordered {
     border: 1px solid var(--text_dark);
     border-radius: 5px;

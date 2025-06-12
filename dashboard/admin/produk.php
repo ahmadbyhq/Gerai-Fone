@@ -292,19 +292,26 @@ require_once(__DIR__ . '/../../authentication/auth.php');
 
                             <!-- Previous Button -->
                             <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                                <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>">Previous</a>
+                                <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>">
+                                    <ion-icon name="chevron-back-outline"></ion-icon>
+                                </a>
                             </li>
 
                             <!-- Numbered Pages -->
                             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                                 <li class="page-item <?= ($i === $page) ? 'active' : '' ?>">
-                                    <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
+                                    <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>">
+                                        <?= $i ?>
+                                    </a>
                                 </li>
                             <?php endfor; ?>
 
                             <!-- Next Button -->
                             <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
-                                <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>">Next</a>
+                                <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>">
+                                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                                </a>
+                                
                             </li>
 
                         </ul>
