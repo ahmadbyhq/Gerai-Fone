@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require_once(__DIR__ . '/../../config/dbConnection.php');
 
@@ -9,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = trim($_POST['password']);
 
     if ($email && $password) {
-        $stmt = $conn->prepare("SELECT id_user, email, password FROM user WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id_user, email, password, role FROM user WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -17,13 +18,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result && $result->num_rows === 1) {
             $user = $result->fetch_assoc();
 
-            // Verifikasi password hash
             if (password_verify($password, $user['password'])) {
-                $_SESSION['user_id'] = $user['id_user'];
-                $_SESSION['email'] = $user['email'];
-                $_SESSION['LAST_ACTIVITY'] = time();
-                header("Location: dashboard.php");
-                exit;
+                // cek role admin
+                if ($user['role'] === 'admin') {
+                    $_SESSION['user_id'] = $user['id_user'];
+                    $_SESSION['email'] = $user['email'];
+                    $_SESSION['role'] = $user['role'];
+                    $_SESSION['LAST_ACTIVITY'] = time();
+                    header("Location: dashboard.php");
+                    exit;
+                } else {
+                    $loginError = "Email atau Password salah.";
+                }
             } else {
                 $loginError = "Password salah.";
             }
@@ -36,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 
 

@@ -128,6 +128,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                             <tr>
                                 <th>No</th>
                                 <th>Nama Produk</th>
+                                <th>Deskripsi Produk</th>
                                 <th>Gambar Produk</th>
                                 <th>Kategori</th>
                                 <th>Harga</th>
@@ -181,16 +182,29 @@ require_once(__DIR__ . '/../../authentication/auth.php');
 
                             while($row = mysqli_fetch_assoc($query)) {
                                 // Ambil data
-                                $namaProduk = htmlspecialchars($row['nama_produk']);
                                 $idProduk   = (int)$row['id_produk'];
+                                $namaProduk = htmlspecialchars($row['nama_produk']);
+                                $deskripsi_dashboard  = nl2br(htmlspecialchars($row['deskripsi_produk']));
+                                $deskripsi = htmlspecialchars($row['deskripsi_produk']);
                                 $kategori   = htmlspecialchars($row['kategori'] ?? 'Lainnya');
                                 $harga      = number_format($row['harga_produk'], 0, ',', '.');
                                 $stok       = (int)$row['stok'];
-                                $gambarPath = "../../upload/devices.png";
+                                // $gambarPath = "../../upload/devices.png";
+                                // $gambarQuery = mysqli_query($conn, "SELECT nama_file FROM gambar_produk WHERE id_produk = $idProduk");
+                                // if ($gambarQuery && $g = mysqli_fetch_assoc($gambarQuery)) {
+                                //     $gambarPath = "../../upload/" . htmlspecialchars($g['nama_file']);
+                                // }
+
                                 $gambarQuery = mysqli_query($conn, "SELECT nama_file FROM gambar_produk WHERE id_produk = $idProduk");
-                                if ($gambarQuery && $g = mysqli_fetch_assoc($gambarQuery)) {
-                                    $gambarPath = "../../upload/" . htmlspecialchars($g['nama_file']);
+                                $gambarList = [];
+
+                                while ($g = mysqli_fetch_assoc($gambarQuery)) {
+                                    $gambarList[] = "../../upload/" . htmlspecialchars($g['nama_file']);
                                 }
+                                if (empty($gambarList)) {
+                                    $gambarList[] = "../../upload/devices.png";
+                                }
+                                $gambarPath = $gambarList[0];
 
                                 // Tentukan status produk
                                 if ($stok <= 0) {
@@ -200,37 +214,118 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                                 } else {
                                     $status = "<span class='badge bg-success'>Tersedia</span>";
                                 }
+                                
 
                                 echo "
                                 <tr>
                                     <td class='align-middle'>$no</td>
-                                    <td class='text-start align-middle'>
-                                        <div class='fw-semibold ps-4'>$namaProduk</div>
+                                    <td class='text-start align-middle' style='max-width: 200px;'>
+                                        <div class='fw-semibold ps-3'>$namaProduk</div>
                                     </td>
 
-                                    <td class='text-center align-middle'>
-                                        <img src='$gambarPath' alt='$namaProduk'
-                                            style='width:50px; height:50px; object-fit:contain; cursor:pointer; margin: 3px; padding: 5px; border: 1px solid #000000; border-radius: 2px;'
-                                            data-bs-toggle='modal'
-                                            data-bs-target='#imageModal'
-                                            onclick=\"document.getElementById('modalImage').src='$gambarPath'\">
+                                    <td class='text-start align-middle py-3'>
+                                        <div class='scroll-deskripsi ps-3 pe-5'>
+                                            $deskripsi_dashboard
+                                        </div>
                                     </td>
+
+
+                                    <td class='align-middle'>
+                                        <div class='d-flex flex-wrap justify-content-center gap-2'>";
+                                            $gambarCount = count($gambarList);
+                                            foreach ($gambarList as $index => $gambarPath) {
+                                            $gambarNamaFile = basename($gambarPath);
+                                            echo "
+                                            <div class='position-relative d-inline-block'>
+                                                <img src='$gambarPath' alt='$namaProduk'
+                                                    style='width:50px; height:50px; object-fit:contain; cursor:pointer; margin: 3px; padding: 3px; border: 1px solid #000000; border-radius: 2px;'
+                                                    data-bs-toggle='modal'
+                                                    data-bs-target='#imageModal$index$idProduk'>
+                                            </div>
+                                            
+                                            <!-- Modal preview gambar + ikon -->
+                                            <div class='modal fade' id='imageModal$index$idProduk' tabindex='-1'>
+                                                <div class='modal-dialog modal-dialog-centered'>
+                                                    <div class='modal-content'>
+                                                        <div class='modal-body text-center'>
+                                                            <img src='$gambarPath' class='img-fluid mb-3'>
+
+                                                            <!-- Ikon trash dan pencil muncul hanya di modal -->
+                                                            <div class='d-flex justify-content-center gap-3'>
+                                                                <a href='../../admin/delete/deleteImage.php?nama_file=$gambarNamaFile&id_produk=$idProduk'
+                                                                    onclick='return confirm(\"Yakin hapus gambar?\")'
+                                                                    class='btn btn-danger'>
+                                                                    <ion-icon name='trash'></ion-icon> Hapus
+                                                                </a>
+                                                                <button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#updateImageModal$index$idProduk'>
+                                                                    <ion-icon name='pencil'></ion-icon> Edit
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Modal update gambar -->
+                                            <div class='modal fade' id='updateImageModal$index$idProduk' tabindex='-1'>
+                                                <div class='modal-dialog'>
+                                                    <form method='POST' action='../../admin/update/updateImage.php' enctype='multipart/form-data'>
+                                                        <div class='modal-content'>
+                                                            <div class='modal-header'>
+                                                                <h5 class='modal-title'>Update Gambar</h5>
+                                                                <button type='button' class='btn-close' data-bs-dismiss='modal'></button>
+                                                            </div>
+                                                            <div class='modal-body'>
+                                                                <input type='hidden' name='old_file' value='$gambarNamaFile'>
+                                                                <input type='hidden' name='id_produk' value='$idProduk'>
+                                                                <div class='mb-3'>
+                                                                    <label for='new_image' class='form-label'>Pilih Gambar Baru</label>
+                                                                    <input type='file' class='form-control' name='new_image' required>
+                                                                </div>
+                                                            </div>
+                                                            <div class='modal-footer'>
+                                                                <button type='submit' class='btn btn-secondary'>Update</button>
+                                                                <button type='button' class='btn btn-danger' data-bs-dismiss='modal'>Batal</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            ";
+                                            }
+                                            if ($gambarCount < 3) {
+                                                echo "
+                                                <img src='../../upload/add.png' alt='Tambah Gambar'
+                                                    style='width:50px; height:50px; object-fit:contain; cursor:pointer; margin: 3px; padding: 3px; border: 1px dashed #000000; border-radius: 2px;'
+                                                    data-bs-toggle='modal'
+                                                    data-bs-target='#addImageModal'
+                                                    data-id='$idProduk'>
+                                                ";
+                                            }
+                                        echo "
+                                        </div>
+                                    </td>
+                                    ";
+                                    echo "
                                     <td class='align-middle'>$kategori</td>
                                     <td class='text-start align-middle ps-4'>Rp $harga</td>
                                     <td class='align-middle'>$stok</td>
                                     <td class='align-middle'>$status</td>
                                     <td class='align-middle'>
-                                        <button 
-                                            type='button' 
-                                            class='btn btn-sm btn-outline-primary me-1'
-                                            data-bs-toggle='modal'
-                                            data-bs-target='#modalEditProduk$idProduk'>
-                                            <ion-icon name='create-outline'></ion-icon>
-                                        </button>
+                                        <div class='d-flex align-items-center gap-2'>
+                                            <button 
+                                                type='button' 
+                                                class='btn btn-sm btn-outline-primary me-1'
+                                                data-bs-toggle='modal'
+                                                data-bs-target='#modalEditProduk$idProduk'>
+                                                <ion-icon name='create-outline'></ion-icon>
+                                            </button>
 
-                                        <a href='../../admin/delete/deleteProduct.php?id=$idProduk' onclick='return confirm(\"Yakin hapus produk?\")' class='btn btn-sm btn-outline-danger'>
-                                            <ion-icon name='trash-outline'></ion-icon>
-                                        </a>
+                                            <a href='../../admin/delete/deleteProduct.php?id=$idProduk' onclick='return confirm(\"Yakin hapus produk?\")' class='btn btn-sm btn-outline-danger'>
+                                                <ion-icon name='trash-outline'></ion-icon>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                                 <!-- Modal Edit Produk -->
@@ -247,6 +342,10 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                                                     <div class='mb-3'>
                                                         <label>Nama Produk</label>
                                                         <input type='text' class='form-control' name='nama_produk' value='$namaProduk' required>
+                                                    </div>
+                                                    <div class='mb-3'>
+                                                        <label>Deskripsi Produk</label>
+                                                        <textarea class='form-control' name='deskripsi_produk' rows='4' required>$deskripsi</textarea>
                                                     </div>
                                                     <div class='mb-3'>
                                                         <label>Harga</label>
@@ -266,10 +365,6 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                                                             }
                                                     echo "</select>
                                                     </div>
-                                                    <div class='mb-3'>
-                                                        <label>Ganti Gambar (opsional)</label>
-                                                        <input type='file' class='form-control' name='gambar'>
-                                                    </div>
                                                 </div>
                                                 <div class='modal-footer'>
                                                     <button type='submit' class='btn btn-secondary'>Simpan</button>
@@ -286,13 +381,13 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                         </tbody>
                     </table>
 
-                    <?php if ($totalPages > 1): ?>
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center mt-4">
+                    <?php if ($totalPages >= 1): ?>
+                    <nav aria-label="Page navigation" class="mt-4">
+                        <ul class="pagination justify-content-center align-items-center">
 
                             <!-- Previous Button -->
                             <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                                <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>">
+                                <a class="page-link d-flex align-items-center justify-content-center" href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>">
                                     <ion-icon name="chevron-back-outline"></ion-icon>
                                 </a>
                             </li>
@@ -300,7 +395,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                             <!-- Numbered Pages -->
                             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                                 <li class="page-item <?= ($i === $page) ? 'active' : '' ?>">
-                                    <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>">
+                                    <a class="page-link d-flex align-items-center justify-content-center" href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>">
                                         <?= $i ?>
                                     </a>
                                 </li>
@@ -308,10 +403,9 @@ require_once(__DIR__ . '/../../authentication/auth.php');
 
                             <!-- Next Button -->
                             <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
-                                <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>">
+                                <a class="page-link d-flex align-items-center justify-content-center" href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>">
                                     <ion-icon name="chevron-forward-outline"></ion-icon>
                                 </a>
-                                
                             </li>
 
                         </ul>
@@ -324,7 +418,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
         </main>
     </div>
 
-    <!-- Modal Gambar -->
+    <!-- Modal Gambar
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -333,7 +427,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Modal Tambah Produk -->
     <div class="modal fade" id="modalTambahProduk" tabindex="-1" aria-labelledby="modalTambahProdukLabel"
@@ -350,6 +444,12 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                             <label for="nama_produk" class="form-label">Nama Produk</label>
                             <input type="text" class="form-control" name="nama_produk" id="nama_produk" required>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="deskripsi_produk" class="form-label">Deskripsi Produk</label>
+                            <textarea class="form-control" name="deskripsi_produk" id="deskripsi_produk" rows="4" required></textarea>
+                        </div>
+
 
                         <div class="mb-3">
                             <label for="kategori" class="form-label">Kategori</label>
@@ -392,8 +492,45 @@ require_once(__DIR__ . '/../../authentication/auth.php');
         </div>
     </div>
 
+        <!-- Modal Tambah Gambar -->
+    <div class="modal fade" id="addImageModal" tabindex="-1" aria-labelledby="addImageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="../../admin/add/tambahGambarProduk.php" method="POST" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tambah Gambar Produk</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id_produk" id="id_produk_add_image">
+                        <div class="mb-3">
+                            <label for="gambar" class="form-label">Pilih Gambar</label>
+                            <input type="file" class="form-control" name="gambar" accept="image/*" required>
+                        </div>
+                    </div>
+                    <?php $errorAddGambar = $_GET['error'] ?? ''; ?>
+                    <p class="tambah-gambar-error p-1"><?php echo htmlspecialchars($errorAddGambar); ?></p>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const addImageModal = document.getElementById('addImageModal');
+            addImageModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const idProduk = button.getAttribute('data-id');
+                const input = addImageModal.querySelector('#id_produk_add_image');
+                input.value = idProduk;
+            });
+        });
+    </script>
 
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

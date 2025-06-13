@@ -23,13 +23,10 @@ CREATE TABLE produk (
         ON DELETE CASCADE
 );
 
-
-
 INSERT INTO user (nama, email, password) VALUES
 ('Admin Geraifone1', 'admin1@geraifone.com', 'admin123'), 
 ('Ahmad', 'ahmad@geraifone.com', 'ahmad123'),
-('Hamba Allah', 'staff1@geraifone.com', 'staff123');
-
+('Hamba Allah', 'staff1@geraifone.com', 'staff123');    
 
 INSERT INTO kategori_produk (kategori) VALUES
 ('Smartphone'),

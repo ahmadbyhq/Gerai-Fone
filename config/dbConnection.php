@@ -1,10 +1,15 @@
 <?php
 
 
+// $host     = "srv1410.hstgr.io";
+// $user     = "u725894752_admingeraifone";
+// $password = "AdminGeraifone123";
+// $dbname   = "u725894752_geraifone";
+
 $host     = "srv1410.hstgr.io";
-$user     = "u725894752_admingeraifone";
-$password = "AdminGeraifone123";
-$dbname   = "u725894752_geraifone";
+$user     = "u725894752_geraiFone";
+$password = "Admingeraifone123;";
+$dbname   = "u725894752_geraifone_rpl";
 
 // Membuat koneksi ke database
 $conn = new mysqli($host, $user, $password, $dbname);

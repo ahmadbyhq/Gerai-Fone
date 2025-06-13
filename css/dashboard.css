@@ -185,19 +185,44 @@ body {
 }
 
 .add-product-btn:hover {
-    background-color: #2c2c2c;
+    background-color: var(--text_dark);
     color: var(--text_light);
 }
 
 .pagination .page-link {
     color: var(--text_dark) !important;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
 }
+
 
 .page-item.active .page-link {
     background-color: var(--button);
     border-color: var(--bg);
     color: var(--text_light) !important;
 }
+
+
+.scroll-deskripsi {
+    max-width: 300px;
+    max-height: 120px;
+    overflow: auto;
+    box-sizing: content-box;
+    background-color: transparent;
+    text-align: justify;
+}
+
+.scroll-deskripsi::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scroll-deskripsi::-webkit-scrollbar-thumb {
+    background-color: #6c757d;
+    border-radius: 10px;
+}
+
+
 
 /* .table-bordered {
     border: 1px solid var(--text_dark);

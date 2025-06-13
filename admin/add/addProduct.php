@@ -4,6 +4,7 @@ require_once(__DIR__ . '/../../config/dbConnection.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama      = mysqli_real_escape_string($conn, $_POST['nama_produk']);
     $idKategori = (int) $_POST['id_kategori'];
+    $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi_produk']);
     $harga     = (int) $_POST['harga_produk'];
     $stok      = (int) $_POST['stok'];
     $gambarName = '';
@@ -29,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Simpan produk
     $insert = mysqli_query($conn, "
-        INSERT INTO produk (nama_produk, id_kategori, harga_produk, stok)
-        VALUES ('$nama', $idKategori, $harga, $stok)
+        INSERT INTO produk (nama_produk, id_kategori, harga_produk, stok, deskripsi_produk)
+        VALUES ('$nama', $idKategori, $harga, $stok, '$deskripsi')
     ");
 
     if ($insert) {
