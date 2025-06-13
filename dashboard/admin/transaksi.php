@@ -26,7 +26,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
             <nav>
                 <a href="dashboard.php"><ion-icon name="grid-outline"></ion-icon> Dashboard</a>
                 <a href="produk.php"><ion-icon name="bag-outline"></ion-icon> Produk</a>
-                <a href="kategoriProduk.php"><ion-icon name="albums-outline"></ion-icon> Kategori Produk</a>
+                <a href="pelanggan.php"><ion-icon name="albums-outline"></ion-icon> Pelanggan </a>
                 <a href="transaksi.php" class="active"><ion-icon name="cart-outline"></ion-icon> Transaksi</a>
                 <a href="logproduk.php"><ion-icon name="time-outline"></ion-icon> Riwayat Log Produk</a>
                 <a href="headnews.php"><ion-icon name="images-outline"></ion-icon> Headnews</a>

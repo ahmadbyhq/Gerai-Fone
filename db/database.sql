@@ -23,6 +23,14 @@ CREATE TABLE produk (
         ON DELETE CASCADE
 );
 
+-- Membuat tabel pelanggan
+CREATE TABLE pelanggan (
+    id_pelanggan INT AUTO_INCREMENT PRIMARY KEY,
+    nama_pelanggan CHAR(25),
+    no_hp VARCHAR(15),
+    alamat TEXT
+);
+
 
 
 INSERT INTO user (nama, email, password) VALUES

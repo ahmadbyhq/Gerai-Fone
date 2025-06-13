@@ -32,8 +32,8 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                 <a href="produk.php" class="active">
                     <ion-icon name="bag-outline"></ion-icon> Produk
                 </a>
-                <a href="kategoriProduk.php">
-                    <ion-icon name="albums-outline"></ion-icon> Kategori Produk
+                <a href="pelanggan.php">
+                    <ion-icon name="albums-outline"></ion-icon> Pelanggan
                 </a>
                 <a href="transaksi.php">
                     <ion-icon name="cart-outline"></ion-icon> Transaksi
