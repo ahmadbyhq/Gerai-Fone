@@ -3,8 +3,8 @@
 
     $timeout_duration = 900;
 
-    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-        header("Location: /dashboard/admin/login.php");
+    if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'pelanggan') {
+        header("Location: login-user.php");
         exit();
     }
 
@@ -12,7 +12,7 @@
     if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeout_duration) {
         session_unset();   
         session_destroy();
-        header("Location: /dashboard/admin/login.php?timeout=1");
+        header("Location: login-user.php?timeout=1");
         exit();
     }
 

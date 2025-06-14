@@ -101,6 +101,7 @@ $no = $offset + 1;
                             <tr>
                                 <th>No</th>
                                 <th>Nama Pelanggan</th>
+                                <th>Email</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Nomor HP</th>
                                 <th>Alamat</th>
@@ -113,6 +114,7 @@ $no = $offset + 1;
                                 <tr>
                                     <td class="align-middle"><?= $no++ ?></td>
                                     <td class="text-start align-middle ps-4"><?= htmlspecialchars($row['nama']) ?></td>
+                                    <td class="text-start align-middle ps-4"><?= htmlspecialchars($row['email']) ?></td>
                                     <td class="text-start align-middle ps-4"><?= htmlspecialchars($row['jenis_kelamin']) ?></td>
                                     <td class="text-start align-middle ps-4"><?= htmlspecialchars($row['no_hp']) ?></td>
                                     <td class="text-start align-middle ps-4"><?= htmlspecialchars($row['alamat']) ?></td>
@@ -140,6 +142,10 @@ $no = $offset + 1;
                                                             <div class="mb-3 text-start">
                                                                 <label class="form-label text-start">Nama Pelanggan</label>
                                                                 <input type="text" class="form-control" name="nama" value="<?= htmlspecialchars($row['nama']) ?>" required>
+                                                            </div>
+                                                            <div class="mb-3 text-start">
+                                                                <label class="form-label text-start">Email</label>
+                                                                <input type="email" class="form-control" name="email" value="<?= htmlspecialchars($row['email']) ?>" required>
                                                             </div>
                                                             <div class="mb-3 text-start">
                                                                 <label class="form-label text-start">Jenis Kelamin</label>

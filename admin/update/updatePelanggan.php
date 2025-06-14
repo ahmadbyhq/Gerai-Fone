@@ -4,12 +4,14 @@ require_once('../../config/dbConnection.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = (int) $_POST['id_user'];
     $nama = $_POST['nama'];
+    $email = $_POST['email'];
     $jenis_kelamin = $_POST['jenis_kelamin'];
     $no_hp = $_POST['no_hp'];
     $alamat = $_POST['alamat'];
 
     $query = "UPDATE user SET 
                 nama = '$nama', 
+                email = '$email', 
                 jenis_kelamin = '$jenis_kelamin', 
                 no_hp = '$no_hp', 
                 alamat = '$alamat' 

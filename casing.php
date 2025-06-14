@@ -4,190 +4,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Beranda</title>
+  <title>Geraifone - Beranda</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" />
   <link rel="stylesheet" href="/css/user.css" />
-  <link rel="icon" type="image/png" href="/img/logo.png" />
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg border-bottom py-2 fixed-top">
-        <div class="container d-flex align-items-center justify-content-between">
-            <!-- Logo -->
-            <a class="navbar-brand fw-bold fs-4 d-flex align-items-center gap-4" href="index.php">
-                <img src="img\logo.png" alt="Logo Geraifone" class="img-logo" />
-                Geraifone
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg border-bottom py-2 fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <!-- Logo -->
+      <a class="navbar-brand fw-bold fs-4 d-flex align-items-center gap-4" href="index.php">
+        <img src="img\logo.png" alt="Logo Geraifone" class="img-logo" />
+        Geraifone
+      </a>
+
+      <!-- Menu -->
+      <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
+        <ul class="navbar-nav mb-2 mb-lg-0 gap-lg-5">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.php">Beranda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="smartphone.php">Smartphone</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              Aksesoris
             </a>
-
-            <!-- Menu -->
-            <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
-                <ul class="navbar-nav mb-2 mb-lg-0 gap-lg-5">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.php">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="smartphone.php">Smartphone</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            Aksesoris
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="casing.php">Casing</a></li>
-                            <li>
-                                <a class="dropdown-item" href="charger.php">Charger</a>
-                            </li>
-                            <li><a class="dropdown-item" href="tws.php">TWS</a></li>
-                            <li>
-                                <a class="dropdown-item" href="powerbank.php">Power Bank</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.php">Tentang Kami</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Search & Icons -->
-            <div class="d-flex align-items-center gap-5">
-                <!-- Search -->
-                <div class="input-group input-group-sm">
-                    <span class="input-group-text bg-white border-end-0">
-                        <ion-icon name="search-outline" class="icon"></ion-icon>
-                    </span>
-                    <input type="text" class="form-control border-start-0" placeholder="Cari Produk" />
-                </div>
-
-                <!-- Profile & Button -->
-                <div class="d-flex align-items-center gap-5">
-                    <a class="btn py-2" href="tentang-toko.php">Lihat Toko</a>
-                    <a href="profile.php" class="text-dark fs-5 d-flex align-items-center">
-                        <ion-icon name="person-outline" class="icon"></ion-icon>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- Navbar End -->
-
-
-  <!-- carousel -->
-  <div id="carouselExampleIndicators" class="carousel slide mt-5" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-        aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-        aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-        aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active text-left py-5">
-        <div class="container d-flex align-items-center justify-content-around">
-          <div>
-            <h2 class="fw-bold">Galaxy S24 Ultra</h2>
-            <p>Rasakan Kekuatan Galaxy AI</p>
-            <a class="btn" href="#">Beli Sekarang</a>
-          </div>
-          <img src="img/samsung s24.png" alt="Galaxy S24" />
-        </div>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="casing.php">Casing</a></li>
+              <li>
+                <a class="dropdown-item" href="charger.php">Charger</a>
+              </li>
+              <li><a class="dropdown-item" href="tws.php">TWS</a></li>
+              <li>
+                <a class="dropdown-item" href="powerbank.php">Power Bank</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.php">Tentang Kami</a>
+          </li>
+        </ul>
       </div>
-      <div class="carousel-item text-left py-5">
-        <div class="container d-flex align-items-center justify-content-around">
-          <div>
-            <h2 class="fw-bold">Galaxy S24 Ultra</h2>
-            <p>Rasakan Kekuatan Galaxy AI</p>
-            <a class="btn" href="#">Beli Sekarang</a>
-          </div>
-          <img src="img/samsung_s24_green.png" alt="Galaxy S24" />
+
+      <!-- Search & Icons -->
+      <div class="d-flex align-items-center gap-5">
+        <!-- Search -->
+        <div class="input-group input-group-sm">
+          <span class="input-group-text bg-white border-end-0">
+            <ion-icon name="search-outline" class="icon"></ion-icon>
+          </span>
+          <input type="text" class="form-control border-start-0" placeholder="Cari Produk" />
         </div>
-      </div>
-      <div class="carousel-item text-left py-5">
-        <div class="container d-flex align-items-center justify-content-around">
-          <div>
-            <h2 class="fw-bold">Galaxy S24 Ultra</h2>
-            <p>Rasakan Kekuatan Galaxy AI</p>
-            <a class="btn" href="#">Beli Sekarang</a>
-          </div>
-          <img src="img/samsung_s24_orange.png" alt="Galaxy S24" />
+
+        <!-- Profile & Button -->
+        <div class="d-flex align-items-center gap-5">
+          <a class="btn py-2" href="tentang-toko.php">Lihat Toko</a>
+          <a href="profile.php" class="text-dark fs-5 d-flex align-items-center">
+            <ion-icon name="person-outline" class="icon"></ion-icon>
+          </a>
         </div>
       </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-      title="Previous Slide" data-bs-slide="prev">
-      <ion-icon class="icon-control" name="chevron-back-outline" size="large"></ion-icon>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" title="Next Slide"
-      data-bs-slide="next">
-      <ion-icon class="icon-control" name="chevron-forward-outline" size="large"></ion-icon>
-    </button>
-  </div>
-
-  <!-- Kategori Produk -->
-  <section class="container text-center justify-content-center my-5">
-    <h4 class="fw-bold m-5">Kategori Produk</h4>
-    <div class="d-flex justify-content-around flex-wrap gap-5">
-      <div class="kategori-icon text-center">
-        <a href="casing.php">
-          <div class="circle-bg">
-            <img src="img/casing_kategori.png" alt="Casing" />
-          </div>
-        </a>
-        <p class="fw-bold">Casing</p>
-      </div>
-
-      <div class="kategori-icon text-center">
-        <a href="charger.php">
-          <div class="circle-bg">
-            <img src="img/charger_kategori.png" alt="Casing" />
-          </div>
-        </a>
-        <p class="fw-bold">Charger</p>
-      </div>
-
-      <div class="kategori-icon text-center">
-        <a href="smartphone.php">
-          <div class="circle-bg">
-            <img src="img/hp_kategori.png" alt="Casing" />
-          </div>
-        </a>
-        <p class="fw-bold">Smartphone</p>
-      </div>
-
-      <div class="kategori-icon text-center">
-        <a href="tws.php">
-          <div class="circle-bg">
-            <img src="img/tws_kategori.png" alt="Casing" />
-          </div>
-        </a>
-        <p class="fw-bold">TWS</p>
-      </div>
-
-      <div class="kategori-icon text-center">
-        <a href="powerbank.php">
-          <div class="circle-bg">
-            <img src="img/pb_kategori.png" alt="Casing" />
-          </div>
-        </a>
-        <p class="fw-bold">Power Bank</p>
-      </div>
-    </div>
-  </section>
+  </nav>
+  <!-- Navbar End -->
 
   <!-- Produk Populer -->
-  <section class="container my-5">
-    <h4 class="text-center m-5 fw-bold">Produk Populer</h4>
+  <section class="my-5 pt-5">
+    <h4 class="text-center text-header fw-bold">Casing Smartphone</h4>
 
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-5">
-
         <div class="col d-flex justify-content-center">
           <div class="card product-card text-center">
-            <img src="img\moondrop_spacetravel.png" alt="Samsung S23 Ultra" />
+            <img src="img\S23_case_green.png" alt="S23 Case Green " />
             <div class="d-flex justify-content-center gap-1 mt-2">
               <ion-icon name="star" class="star-icon"></ion-icon>
               <ion-icon name="star" class="star-icon"></ion-icon>
@@ -196,8 +90,8 @@
               <ion-icon name="star-outline" class="star-icon"></ion-icon>
             </div>
             <div class="card-body">
-              <h6>Moondrop Space Travel</h6>
-              <p>Rp 450.000</p>
+              <h6>S23 Ultra Case Leather - Green</h6>
+              <p>Rp 70.000</p>
               <button class="btn">Tambah Keranjang</button>
             </div>
           </div>
@@ -205,7 +99,8 @@
 
         <div class="col d-flex justify-content-center">
           <div class="card product-card text-center">
-            <img src="img\robot_25w.png" alt="Samsung S23 Ultra" />
+            <!-- Gambar Produk -->
+            <img src="img\iphone13_softcase_purple.png" alt="Samsung S23 Ultra" class="img-fluid" />
             <div class="d-flex justify-content-center gap-1 mt-2">
               <ion-icon name="star" class="star-icon"></ion-icon>
               <ion-icon name="star" class="star-icon"></ion-icon>
@@ -214,8 +109,8 @@
               <ion-icon name="star" class="star-icon"></ion-icon>
             </div>
             <div class="card-body">
-              <h6>Kepala Charger Robot 25 Watt</h6>
-              <p>Rp 150.000</p>
+              <h6>Iphone 13 Pro Softcase - Purple</h6>
+              <p>Rp 40.000</p>
               <button class="btn">Tambah Keranjang</button>
             </div>
           </div>
@@ -223,7 +118,26 @@
 
         <div class="col d-flex justify-content-center">
           <div class="card product-card text-center">
-            <img src="img\galaxy_budspro.png" alt="Samsung S23 Ultra" />
+            <img src="img\S23_case_green.png" alt="S23 Case Green " />
+            <div class="d-flex justify-content-center gap-1 mt-2">
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <ion-icon name="star-outline" class="star-icon"></ion-icon>
+              <ion-icon name="star-outline" class="star-icon"></ion-icon>
+            </div>
+            <div class="card-body">
+              <h6>S23 Ultra Case Leather - Green</h6>
+              <p>Rp 70.000</p>
+              <button class="btn">Tambah Keranjang</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col d-flex justify-content-center">
+          <div class="card product-card text-center">
+            <!-- Gambar Produk -->
+            <img src="img\iphone13_softcase_purple.png" alt="Samsung S23 Ultra" class="img-fluid" />
             <div class="d-flex justify-content-center gap-1 mt-2">
               <ion-icon name="star" class="star-icon"></ion-icon>
               <ion-icon name="star" class="star-icon"></ion-icon>
@@ -232,8 +146,8 @@
               <ion-icon name="star" class="star-icon"></ion-icon>
             </div>
             <div class="card-body">
-              <h6>Galaxy Buds Pro 2</h6>
-              <p>Rp 2.100.000</p>
+              <h6>Iphone 13 Pro Softcase - Purple</h6>
+              <p>Rp 40.000</p>
               <button class="btn">Tambah Keranjang</button>
             </div>
           </div>
@@ -241,17 +155,17 @@
 
         <div class="col d-flex justify-content-center">
           <div class="card product-card text-center">
-            <img src="img\samsung_s24_green.png" alt="Samsung S23 Ultra" />
+            <img src="img\iphone11_carbon.png" alt="Samsung S23 Ultra" />
             <div class="d-flex justify-content-center gap-1 mt-2">
               <ion-icon name="star" class="star-icon"></ion-icon>
               <ion-icon name="star" class="star-icon"></ion-icon>
               <ion-icon name="star" class="star-icon"></ion-icon>
               <ion-icon name="star" class="star-icon"></ion-icon>
-              <ion-icon name="star" class="star-icon"></ion-icon>
+              <ion-icon name="star-outline" class="star-icon"></ion-icon>
             </div>
             <div class="card-body">
-              <h6>Samsung S24 Ultra 12/512 Titanium Green</h6>
-              <p>Rp 25.000.000</p>
+              <h6>Iphone 11 Case Carbon</h6>
+              <p>Rp 100.000</p>
               <button class="btn">Tambah Keranjang</button>
             </div>
           </div>
@@ -277,58 +191,39 @@
 
         <div class="col d-flex justify-content-center">
           <div class="card product-card text-center">
-            <img src="img\samsung s24.png" alt="Samsung S23 Ultra" />
+            <img src="img\iphone11_carbon.png" alt="Samsung S23 Ultra" />
             <div class="d-flex justify-content-center gap-1 mt-2">
               <ion-icon name="star" class="star-icon"></ion-icon>
               <ion-icon name="star" class="star-icon"></ion-icon>
               <ion-icon name="star" class="star-icon"></ion-icon>
               <ion-icon name="star" class="star-icon"></ion-icon>
-              <ion-icon name="star" class="star-icon"></ion-icon>
+              <ion-icon name="star-outline" class="star-icon"></ion-icon>
             </div>
             <div class="card-body">
-              <h6>Samsung S24 Ultra 12/512 Titanium Violet</h6>
-              <p>Rp 25.000.000</p>
-              <button class="btn">Tambah Keranjang</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="col d-flex justify-content-center">
-          <div class="card product-card text-center">
-            <img src="img\samsung_s24_orange.png" alt="Samsung S23 Ultra" />
-            <div class="d-flex justify-content-center gap-1 mt-2">
-              <ion-icon name="star" class="star-icon"></ion-icon>
-              <ion-icon name="star" class="star-icon"></ion-icon>
-              <ion-icon name="star" class="star-icon"></ion-icon>
-              <ion-icon name="star" class="star-icon"></ion-icon>
-              <ion-icon name="star" class="star-icon"></ion-icon>
-            </div>
-            <div class="card-body">
-              <h6>Samsung S24 Ultra 8/256 Titanium Orange</h6>
-              <p>Rp 20.000.000</p>
-              <button class="btn">Tambah Keranjang</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="col d-flex justify-content-center">
-          <div class="card product-card text-center">
-            <img src="img\anker_pb.png" alt="Samsung S23 Ultra" />
-            <div class="d-flex justify-content-center gap-1 mt-2">
-              <ion-icon name="star" class="star-icon"></ion-icon>
-              <ion-icon name="star" class="star-icon"></ion-icon>
-              <ion-icon name="star" class="star-icon"></ion-icon>
-              <ion-icon name="star" class="star-icon"></ion-icon>
-              <ion-icon name="star" class="star-icon"></ion-icon>
-            </div>
-            <div class="card-body">
-              <h6>Anker Power Bank 5000 mAh</h6>
+              <h6>Iphone 11 Case Carbon</h6>
               <p>Rp 100.000</p>
               <button class="btn">Tambah Keranjang</button>
             </div>
           </div>
         </div>
 
+        <div class="col d-flex justify-content-center">
+          <div class="card product-card text-center">
+            <img src="img\fabric_S24.png" alt="Samsung S23 Ultra" />
+            <div class="d-flex justify-content-center gap-1 mt-2">
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <ion-icon name="star" class="star-icon"></ion-icon>
+            </div>
+            <div class="card-body">
+              <h6>S24 Case Fabric - Gray</h6>
+              <p>Rp 120.000</p>
+              <button class="btn">Tambah Keranjang</button>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -377,7 +272,8 @@
           <div class="col-md-2 footer-link">
             <h6 class="fw-bold">Hubungi Kami</h6>
             <ul class="list-unstyled">
-              <li><a href="https://mail.google.com/mail/?view=cm&to=23081010134@student.upnjatim.ac.id" target="_blank">Email</a></li>
+              <li><a href="https://mail.google.com/mail/?view=cm&to=23081010134@student.upnjatim.ac.id"
+                  target="_blank">Email</a></li>
               <li><a href="http://wa.me/6282230116388">WhatsApp</a></li>
             </ul>
           </div>

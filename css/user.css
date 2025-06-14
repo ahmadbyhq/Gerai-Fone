@@ -164,7 +164,8 @@ body {
     background-color: var(--bg_2);
 }
 
-.btn {
+.btn,
+.btn-lihat-toko {
     background-color: var(--button);
     color: var(--text_light);
     border-radius: 5px;
@@ -175,7 +176,8 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.btn:hover {
+.btn:hover,
+.btn-lihat-toko:hover {
     color: var(--text_light);
     background-color: var(--text_dark);
 }
