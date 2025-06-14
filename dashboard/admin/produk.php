@@ -286,13 +286,13 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                         </tbody>
                     </table>
 
-                    <?php if ($totalPages > 1): ?>
+                    <?php if ($totalPages >= 1): ?>
                     <nav aria-label="Page navigation">
                         <ul class="pagination justify-content-center mt-4">
 
                             <!-- Previous Button -->
                             <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                                <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>">
+                                <a class="page-link d-flex align-items-center justify-content-center" href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>">
                                     <ion-icon name="chevron-back-outline"></ion-icon>
                                 </a>
                             </li>
@@ -300,7 +300,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                             <!-- Numbered Pages -->
                             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                                 <li class="page-item <?= ($i === $page) ? 'active' : '' ?>">
-                                    <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>">
+                                    <a class="page-link d-flex align-items-center justify-content-center" href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>">
                                         <?= $i ?>
                                     </a>
                                 </li>
@@ -308,7 +308,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
 
                             <!-- Next Button -->
                             <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
-                                <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>">
+                                <a class="page-link d-flex align-items-center justify-content-center" href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>">
                                     <ion-icon name="chevron-forward-outline"></ion-icon>
                                 </a>
                                 
