@@ -167,7 +167,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card text-bg-success shadow-sm h-100">
+                        <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title">Jumlah Penjualan</h6>
                                 <p class="card-text fs-5"><?= $dataPenjualan['jumlah_transaksi'] ?> Transaksi</p>
@@ -175,7 +175,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card text-bg-warning shadow-sm h-100">
+                        <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title">Total Produk Terjual</h6>
                                 <p class="card-text fs-5"><?= $dataProdukTerjual['total_produk'] ?? 0 ?> Item</p>
@@ -183,7 +183,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card text-bg-info shadow-sm h-100">
+                        <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title">Pelanggan Aktif</h6>
                                 <p class="card-text fs-5"><?= $dataPelangganAktif['pelanggan_aktif'] ?? 0 ?> Orang</p>
