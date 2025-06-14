@@ -2,32 +2,37 @@
 session_start();
 require_once 'config/dbConnection.php';
 
+// Pastikan user sudah diverifikasi dari forgotpassword.php
+if (!isset($_SESSION['reset_user_id'])) {
+    header("Location: forgotpassword.php");
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email'] ?? '');
-    $kode  = trim($_POST['kode'] ?? '');
+    $password = trim($_POST['password'] ?? '');
 
-    if (empty($email) || empty($kode)) {
-        $error = "Email dan kode pemulihan wajib diisi.";
+    if (strlen($password) < 6) {
+        $error = "Password minimal 6 karakter.";
     } else {
-        // Cek apakah email valid dan cocok di DB
-        $stmt = $conn->prepare("SELECT u.id_user FROM user u 
-                                INNER JOIN reset_password r ON u.id_user = r.id_user 
-                                WHERE u.email = ? AND r.kode_reset = ?");
-        $stmt->bind_param("ss", $email, $kode);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $idUser = $_SESSION['reset_user_id'];
 
-        if ($row = $result->fetch_assoc()) {
-            $_SESSION['reset_user_id'] = $row['id_user'];
-            header("Location: setpassword.php");
+        // Update password di tabel user
+        $stmt = $conn->prepare("UPDATE user SET password = ? WHERE id_user = ?");
+        $stmt->bind_param("si", $hashedPassword, $idUser);
+
+        if ($stmt->execute()) {
+            // Hapus sesi reset
+            unset($_SESSION['reset_user_id']);
+            // Redirect ke login
+            header("Location: login-user.php?reset=success");
             exit();
         } else {
-            $error = "Email atau kode pemulihan salah.";
+            $error = "Gagal mengubah password. Silakan coba lagi.";
         }
     }
 }
 ?>
-
 
 
 <!DOCTYPE html>
@@ -106,32 +111,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Navbar End -->
 
     <div class="container-login">
-        <form id="verificationForm" class="login-form" method="POST" action="forgotpassword.php">
-            <h4 class="mb-4 text-center fw-bold">Verifikasi</h4>
+        <form method="POST" action="setpassword.php" class="login-form">
+            <h4 class="mb-4 text-center fw-bold">Masukkan Password Baru</h4>
 
-            <!-- Kode Verifikasi -->
-            <div class="mb-3">
-                <label for="resetEmail" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" id="resetEmail" placeholder="Masukkan email" required>
-                <div class="invalid-feedback">Harap masukkan email yang valid.</div>
-            </div>
             <div>
-                <label for="verificationCode" class="form-label mb-3">Kode Verifikasi</label>
-                <input type="text" name="kode" class="form-control mb-2" id="verificationCode"
-                    placeholder="Masukkan kode pemulihan">
-                <div class="form-text mb-3">Masukkan kode pemulihan yang telah Anda buat.</div>
+                <label for="password" class="form-label mb-3">Password</label>
+                <input type="password" name="password" class="form-control mb-2" id="password"
+                    placeholder="Masukkan password baru" required minlength="6">
             </div>
-
+            
             <?php if (isset($error)): ?>
-                <div class="text-danger pb-3"><?php echo htmlspecialchars($error); ?></div>
-                <!-- <div class="text-danger mb-3"><?= $errorLogin ?></div> -->
+                <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
             <?php endif; ?>
 
-
-            <!-- Tombol Verifikasi -->
-            <button type="submit" class="btn btn-primary w-100">Verifikasi</button>
+            <button type="submit" class="btn btn-primary w-100 my-3">Ubah Password</button>
         </form>
     </div>
+    
+
 
 
 
