@@ -31,6 +31,32 @@ CREATE TABLE pelanggan (
     alamat TEXT
 );
 
+-- Membuat tabel transaksi
+CREATE TABLE transaksi (
+    id_transaksi INT AUTO_INCREMENT PRIMARY KEY,
+    tanggal_transaksi DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id_pelanggan INT,
+    total_harga DECIMAL(10,2),
+    status_pembayaran ENUM('Belum Dibayar', 'Dibayar') DEFAULT 'Belum Dibayar',
+    FOREIGN KEY (id_pelanggan) REFERENCES pelanggan(id_pelanggan)
+        ON DELETE SET NULL
+);
+
+-- Membuat tabel detail transaksi
+CREATE TABLE detail_transaksi (
+    id_detail INT AUTO_INCREMENT PRIMARY KEY,
+    id_transaksi INT,
+    id_produk INT,
+    jumlah INT NOT NULL,
+    harga_satuan DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (id_transaksi) REFERENCES transaksi(id_transaksi)
+        ON DELETE CASCADE,
+    FOREIGN KEY (id_produk) REFERENCES produk(id_produk)
+        ON DELETE SET NULL
+);
+
+
 
 
 INSERT INTO user (nama, email, password) VALUES

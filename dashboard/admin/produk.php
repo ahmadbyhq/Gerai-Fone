@@ -38,8 +38,8 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                 <a href="transaksi.php">
                     <ion-icon name="cart-outline"></ion-icon> Transaksi
                 </a>
-                <a href="logproduk.php">
-                    <ion-icon name="time-outline"></ion-icon> Riwayat Log Produk
+                <a href="laporan.php">
+                    <ion-icon name="time-outline"></ion-icon> Laporan Penjualan
                 </a>
                 <a href="headnews.php">
                     <ion-icon name="images-outline"></ion-icon> Headnews
