@@ -32,9 +32,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                 <a href="produk.php" class="active">
                     <ion-icon name="bag-outline"></ion-icon> Produk
                 </a>
-                <a href="kategoriProduk.php">
-                    <ion-icon name="albums-outline"></ion-icon> Kategori Produk
-                </a>
+                <a href="pelanggan.php"><ion-icon name="person-outline"></ion-icon>Pelanggan</a>
                 <a href="transaksi.php">
                     <ion-icon name="cart-outline"></ion-icon> Transaksi
                 </a>
@@ -189,11 +187,6 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                                 $kategori   = htmlspecialchars($row['kategori'] ?? 'Lainnya');
                                 $harga      = number_format($row['harga_produk'], 0, ',', '.');
                                 $stok       = (int)$row['stok'];
-                                // $gambarPath = "../../upload/devices.png";
-                                // $gambarQuery = mysqli_query($conn, "SELECT nama_file FROM gambar_produk WHERE id_produk = $idProduk");
-                                // if ($gambarQuery && $g = mysqli_fetch_assoc($gambarQuery)) {
-                                //     $gambarPath = "../../upload/" . htmlspecialchars($g['nama_file']);
-                                // }
 
                                 $gambarQuery = mysqli_query($conn, "SELECT nama_file FROM gambar_produk WHERE id_produk = $idProduk");
                                 $gambarList = [];
@@ -417,17 +410,6 @@ require_once(__DIR__ . '/../../authentication/auth.php');
             </div>
         </main>
     </div>
-
-    <!-- Modal Gambar
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <img id="modalImage" src="" alt="Preview" class="img-fluid">
-                </div>
-            </div>
-        </div>
-    </div> -->
 
     <!-- Modal Tambah Produk -->
     <div class="modal fade" id="modalTambahProduk" tabindex="-1" aria-labelledby="modalTambahProdukLabel"

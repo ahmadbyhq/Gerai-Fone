@@ -51,3 +51,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Gagal menambahkan produk.";
     }
 }
+
+?>
