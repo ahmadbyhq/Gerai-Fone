@@ -4,27 +4,6 @@ require_once(__DIR__ . '/../../authentication/auth.php');
 ?>
 
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tambah'])) {
-    $nama_pelanggan = mysqli_real_escape_string($conn, $_POST['nama_pelanggan']);
-    $no_hp = mysqli_real_escape_string($conn, $_POST['no_hp']);
-    $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
-
-    $insert = "INSERT INTO pelanggan (nama_pelanggan, no_hp, alamat) VALUES ('$nama_pelanggan', '$no_hp', '$alamat')";
-    if (mysqli_query($conn, $insert)) {
-        echo "<script>
-                alert('Pelanggan berhasil ditambahkan!');
-                window.location.href = 'pelanggan.php';
-              </script>";
-        exit;
-    } else {
-        echo "<script>
-                alert('Gagal menambahkan pelanggan: " . mysqli_error($conn) . "');
-              </script>";
-    }
-}
-?>
-
-<?php
 $search = mysqli_real_escape_string($conn, $_GET['search'] ?? '');
 $limit = 10;
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -124,16 +103,32 @@ $no = $offset + 1;
                                 <th>Nama Pelanggan</th>
                                 <th>Nomor HP</th>
                                 <th>Alamat</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center">
+                        <tbody>
                             <?php if (mysqli_num_rows($query) > 0): ?>
                                 <?php while($row = mysqli_fetch_assoc($query)): ?>
-                                    <tr>
-                                        <td><?= $no++ ?></td>
-                                        <td><?= htmlspecialchars($row['nama_pelanggan']) ?></td>
-                                        <td><?= htmlspecialchars($row['no_hp']) ?></td>
-                                        <td><?= htmlspecialchars($row['alamat']) ?></td>
+                                    <tr >
+                                        <td class="text-center align-middle"><?= $no++ ?></td>
+                                        <td class="textstart align-middle ps-4"><?= htmlspecialchars($row['nama_pelanggan']) ?></td>
+                                        <td class="textstart align-midd ps-4"><?= htmlspecialchars($row['no_hp']) ?></td>
+                                        <td class="textstart align-middle ps-4"><?= htmlspecialchars($row['alamat']) ?></td>
+                                        <td class="text-center align-middle">
+                                            <!-- Edit Button -->
+                                             <button type="button" class="btn btn-sm btn-outline-primary me-1"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editPelangganModal"
+                                                        onclick="fillEditModal(<?= $row['id_pelanggan']; ?>, '<?= addslashes($row['nama_pelanggan']); ?>', '<?= addslashes($row['no_hp']); ?>', '<?= addslashes($row['alamat']); ?>')">
+                                                    <ion-icon name="create-outline"></ion-icon>
+                                             </button>
+
+                                            <!-- Hapus Button -->
+                                            <a href="../../admin/delete/deletePelanggan.php?id=<?= $row['id_pelanggan']; ?>" 
+                                            onclick="return confirm('Yakin ingin menghapus pelanggan?')" class="btn btn-sm btn-outline-danger">
+                                                <ion-icon name="trash-outline"></ion-icon>
+                                            </a>
+                                        </td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>
@@ -178,38 +173,89 @@ $no = $offset + 1;
 
                 </div>
             </div>
+            <!-- Modal Tambah Pelanggan -->
             <div class="modal fade" id="tambahPelangganModal" tabindex="-1" aria-labelledby="tambahPelangganLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <form method="POST">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="tambahPelangganLabel">Tambah Pelanggan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                    </div>
-                    <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="nama_pelanggan" class="form-label">Nama Pelanggan</label>
-                        <input type="text" class="form-control" name="nama_pelanggan" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="no_hp" class="form-label">No. HP</label>
-                        <input type="text" class="form-control" name="no_hp" pattern="[0-9]{10,15}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="alamat" class="form-label">Alamat</label>
-                        <textarea class="form-control" name="alamat" rows="3" required></textarea>
-                    </div>
-                    </div>
-                    <div class="modal-footer">
-                    <button type="submit" name="tambah" class="btn btn-success">Simpan</button>
-                    </div>
+                <div class="modal-dialog">
+                    <!-- Form mengarah ke tambahpelanggan.php -->
+                    <form method="POST" action="../../admin/add/tambahPelanggan.php" enctype="multipart/form-data">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="tambahPelangganLabel">Tambah Pelanggan</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="nama_pelanggan" class="form-label">Nama Pelanggan</label>
+                                    <input type="text" class="form-control" name="nama_pelanggan" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="no_hp" class="form-label">No. HP</label>
+                                    <input type="text" class="form-control" name="no_hp" pattern="[0-9]{10,15}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="alamat" class="form-label">Alamat</label>
+                                    <textarea class="form-control" name="alamat" rows="3" required></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" name="tambah" class="btn btn-success">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                </form>
             </div>
+
+
+                    <!-- Modal Edit Pelanggan -->
+            <div class="modal fade" id="editPelangganModal" tabindex="-1" aria-labelledby="editPelangganLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form method="POST" action="../../admin/update/updatePelanggan.php">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editPelangganLabel">Edit Pelanggan</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Hidden field to pass the ID -->
+                                <input type="hidden" name="id_pelanggan" id="editIdPelanggan">
+
+                                <!-- Nama Pelanggan -->
+                                <div class="mb-3">
+                                    <label for="editNamaPelanggan" class="form-label">Nama Pelanggan</label>
+                                    <input type="text" class="form-control" name="nama_pelanggan" id="editNamaPelanggan" required>
+                                </div>
+
+                                <!-- No HP -->
+                                <div class="mb-3">
+                                    <label for="editNoHp" class="form-label">No. HP</label>
+                                    <input type="text" class="form-control" name="no_hp" id="editNoHp" required>
+                                </div>
+
+                                <!-- Alamat -->
+                                <div class="mb-3">
+                                    <label for="editAlamat" class="form-label">Alamat</label>
+                                    <textarea class="form-control" name="alamat" id="editAlamat" rows="3" required></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" name="update" class="btn btn-success">Simpan Perubahan</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
+
         </main>
     </div>
 
+    <script>
+    function fillEditModal(id, nama, noHp, alamat) {
+        document.getElementById('editIdPelanggan').value = id;
+        document.getElementById('editNamaPelanggan').value = nama;
+        document.getElementById('editNoHp').value = noHp;
+        document.getElementById('editAlamat').value = alamat;
+    }</script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
