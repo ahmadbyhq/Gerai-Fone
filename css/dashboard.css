@@ -191,6 +191,9 @@ body {
 
 .pagination .page-link {
     color: var(--text_dark) !important;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
 }
 
 .page-item.active .page-link {
