@@ -112,7 +112,7 @@ require_once(__DIR__ . '/../../config/dbConnection.php');
                   <div class='d-flex justify-content-center gap-3'>
                     <a href="#" class="btn btn-sm btn-outline-primary"><ion-icon name="eye-outline"></ion-icon></a>
                     <a href="#" class="btn btn-sm btn-outline-success"><ion-icon name="create-outline"></ion-icon></a>
-                    <a href="#" class="btn btn-sm btn-outline-danger"><ion-icon name="trash-outline"></ion-icon></a>
+                    <a href="../../admin/delete/deleteTransaksi.php?id=<?= $row['id_transaksi'] ?>"class="btn btn-sm btn-outline-danger"><ion-icon name="trash-outline"></ion-icon></a>
                   </div>
                 </td>
               </tr>
