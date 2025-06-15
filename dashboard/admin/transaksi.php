@@ -10,6 +10,7 @@ require_once(__DIR__ . '/../../config/dbConnection.php');
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../css/dashboard.css" />
   <link rel="icon" href="../../img/logo.png" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -159,8 +160,17 @@ require_once(__DIR__ . '/../../config/dbConnection.php');
         <div class="modal-body">
           <div class="mb-3">
             <label>Nama Pelanggan</label>
-            <input type="text" name="nama_pelanggan" class="form-control" required>
+            <select name="id_pelanggan" class="form-select select2" required>
+              <option value="">-- Pilih Pelanggan --</option>
+              <?php
+              $pelanggan = mysqli_query($conn, "SELECT id_pelanggan, nama_pelanggan FROM pelanggan ORDER BY nama_pelanggan ASC");
+              while ($row = mysqli_fetch_assoc($pelanggan)) {
+                echo '<option value="' . $row['id_pelanggan'] . '">' . htmlspecialchars($row['nama_pelanggan']) . '</option>';
+              }
+              ?>
+            </select>
           </div>
+
           <div id="produk-wrapper">
             <div class="row produk-item mb-2">
               <div class="col-7">
@@ -184,6 +194,7 @@ require_once(__DIR__ . '/../../config/dbConnection.php');
               </div>
             </div>
           </div>
+
           <div class="mb-3 mt-3">
             <label>Status Pembayaran</label>
             <select name="status_pembayaran" class="form-select" required>
@@ -205,6 +216,8 @@ require_once(__DIR__ . '/../../config/dbConnection.php');
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   const wrapper = document.getElementById("produk-wrapper");
@@ -226,6 +239,10 @@ document.addEventListener("DOMContentLoaded", function() {
     } else if (e.target.classList.contains("remove-produk")) {
       e.target.closest(".produk-item").remove();
     }
+  });
+
+  $('.select2').select2({
+    dropdownParent: $('#tambahTransaksiModal')
   });
 });
 </script>
