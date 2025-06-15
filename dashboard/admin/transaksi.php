@@ -50,8 +50,8 @@ require_once(__DIR__ . '/../../config/dbConnection.php');
           </div>
         </div>
         <div class="col-md-2 text-end">
-          <button type="button" class="btn btn-primary w-100 fw-semibold" data-bs-toggle="modal" data-bs-target="#tambahTransaksiModal">
-            Tambah Transaksi
+          <button type="button" class="btn primary-btn add-product-btn w-100 p-2 fw-semibold" data-bs-toggle="modal" data-bs-target="#tambahTransaksiModal">
+              Tambah Transaksi
           </button>
         </div>
       </form>
@@ -108,10 +108,12 @@ require_once(__DIR__ . '/../../config/dbConnection.php');
                 <td><?= htmlspecialchars($row['tanggal_transaksi']) ?></td>
                 <td class="text-center"><?= $row['total_harga'] ?></td>
                 <td class="text-center"><?= $row['status_pembayaran'] ?></td>
-                <td class="text-center">
-                  <a href="#" class="btn btn-sm btn-outline-primary"><ion-icon name="eye-outline"></ion-icon></a>
-                  <a href="#" class="btn btn-sm btn-outline-success"><ion-icon name="create-outline"></ion-icon></a>
-                  <a href="#" class="btn btn-sm btn-outline-danger"><ion-icon name="trash-outline"></ion-icon></a>
+                <td class="text-center align-middle">
+                  <div class='d-flex justify-content-center gap-3'>
+                    <a href="#" class="btn btn-sm btn-outline-primary"><ion-icon name="eye-outline"></ion-icon></a>
+                    <a href="#" class="btn btn-sm btn-outline-success"><ion-icon name="create-outline"></ion-icon></a>
+                    <a href="#" class="btn btn-sm btn-outline-danger"><ion-icon name="trash-outline"></ion-icon></a>
+                  </div>
                 </td>
               </tr>
             <?php endwhile; else: ?>
