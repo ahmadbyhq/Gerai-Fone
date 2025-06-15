@@ -95,10 +95,41 @@ require_once(__DIR__ . '/../../authentication/auth.php');
             $resultPelangganAktif = mysqli_query($conn, $queryPelangganAktif);
             $dataPelangganAktif = mysqli_fetch_assoc($resultPelangganAktif);
 
+            // --- LOGIKA PAGINASI BARU UNTUK TABEL PRODUK TERLARIS ---
+            $limit = 5; // Jumlah item per halaman
+            $page = isset($_GET['page_produk']) ? (int)$_GET['page_produk'] : 1; // Menggunakan 'page_produk' untuk menghindari konflik dengan paginasi lain jika ada
+            $offset = ($page - 1) * $limit;
 
-            // Produk terlaris
+            // Query untuk menghitung total produk terjual (tanpa limit)
+            $queryCountProdukTerjualDetail = "
+                SELECT COUNT(DISTINCT p.id_produk) AS total_rows
+                FROM detail_transaksi dt
+                JOIN transaksi t ON dt.id_transaksi = t.id_transaksi
+                JOIN produk p ON dt.id_produk = p.id_produk
+                WHERE DATE(t.tanggal_transaksi) BETWEEN '$tanggalMulai' AND '$tanggalAkhir'
+                AND t.status_pembayaran = 'Dibayar'
+            ";
+            $resultCountProdukTerjualDetail = mysqli_query($conn, $queryCountProdukTerjualDetail);
+            $rowCountProdukTerjualDetail = mysqli_fetch_assoc($resultCountProdukTerjualDetail);
+            $totalProdukRows = $rowCountProdukTerjualDetail['total_rows'];
+
+            // Hitung total halaman
+            $totalPagesProduk = ceil($totalProdukRows / $limit);
+
+            // Pastikan halaman tidak kurang dari 1 atau lebih dari total halaman
+            if ($page < 1) {
+                $page = 1;
+            }
+            if ($page > $totalPagesProduk && $totalPagesProduk > 0) {
+                $page = $totalPagesProduk;
+            } elseif ($totalPagesProduk == 0) { // Jika tidak ada data sama sekali
+                $page = 1;
+            }
+
+
+            // Produk terlaris (dengan LIMIT dan OFFSET)
             $queryProdukTerjualDetail = "
-                SELECT 
+                SELECT
                     p.nama_produk,
                     SUM(dt.jumlah) AS jumlah_terjual,
                     SUM(dt.subtotal) AS total_pendapatan
@@ -109,9 +140,9 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                 AND t.status_pembayaran = 'Dibayar'
                 GROUP BY dt.id_produk
                 ORDER BY jumlah_terjual DESC
+                LIMIT $limit OFFSET $offset
             ";
             $resultProdukTerjualDetail = mysqli_query($conn, $queryProdukTerjualDetail);
-
 
             ?>
 
@@ -156,80 +187,129 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                 </div>
             </div>
 
-            <div class="container mt-5 ms-4">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4 mb-2">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-title">Total Pendapatan</h6>
-                                <p class="card-text fs-5">Rp <?= number_format($dataPenjualan['total_pendapatan'] ?? 0, 0, ',', '.') ?></p>
+                    <div class="container-fluid px-4 mt-5">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4 mb-2 g-3">
+                            <div class="col">
+                                <div class="cardLaporan">
+                                    <div class="cardLaporan-content">
+                                        <ion-icon name="cash-outline" class="cardLaporan-icon"></ion-icon>
+                                        <p class="cardLaporan-value">Rp <?= number_format($dataPenjualan['total_pendapatan'] ?? 0, 0, ',', '.') ?></p>
+                                    </div>
+                                    <div class="cardLaporan-label-area">
+                                        Total Pendapatan
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-title">Jumlah Penjualan</h6>
-                                <p class="card-text fs-5"><?= $dataPenjualan['jumlah_transaksi'] ?> Transaksi</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-title">Total Produk Terjual</h6>
-                                <p class="card-text fs-5"><?= $dataProdukTerjual['total_produk'] ?? 0 ?> Item</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-title">Pelanggan Aktif</h6>
-                                <p class="card-text fs-5"><?= $dataPelangganAktif['pelanggan_aktif'] ?? 0 ?> Orang</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
+                            <div class="col">
+                                <div class="cardLaporan">
+                                    <div class="cardLaporan-content">
+                                        <ion-icon name="cart-outline" class="cardLaporan-icon"></ion-icon>
+                                        <p class="cardLaporan-value"><?= $dataPenjualan['jumlah_transaksi'] ?> Transaksi</p>
+                                    </div>
+                                    <div class="cardLaporan-label-area">
+                                        Jumlah Penjualan
+                                    </div>
+                                </div>
+                            </div>
 
-                <!-- Card Top 5 Produk Terlaris -->
-                <div class="content-container mt-5 mb-3">
+                            <div class="col">
+                                <div class="cardLaporan">
+                                    <div class="cardLaporan-content">
+                                        <ion-icon name="cube-outline" class="cardLaporan-icon"></ion-icon>
+                                        <p class="cardLaporan-value"><?= $dataProdukTerjual['total_produk'] ?? 0 ?> Item</p>
+                                    </div>
+                                    <div class="cardLaporan-label-area">
+                                        Produk Terjual
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="cardLaporan">
+                                    <div class="cardLaporan-content">
+                                        <ion-icon name="people-outline" class="cardLaporan-icon"></ion-icon>
+                                        <p class="cardLaporan-value"><?= $dataPelangganAktif['pelanggan_aktif'] ?? 0 ?> Orang</p>
+                                    </div>
+                                    <div class="cardLaporan-label-area">
+                                        Pelanggan Aktif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- Card Penjualan Produk -->
+                <div class="content-container px-4 my-5">
                     <div class="table-responsive rounded-3 overflow-hidden bg-white p-4">
-                    <h5 class="mb-3">Penjualan Produk</h5>
-<table class="table align-middle table-striped table-hover table-bordered">
-    <thead class="table-secondary text-center align-middle">
-        <tr>
-            <th style="width: 5%;">No</th>
-            <th>Nama Produk</th>
-            <th style="width: 15%;">Jumlah Terjual</th>
-            <th style="width: 20%;">Total Pendapatan</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php $no = 1; while ($row = mysqli_fetch_assoc($resultProdukTerjualDetail)): ?>
-            <tr>
-                <td><?= $no++ ?></td>
-                <td><?= htmlspecialchars($row['nama_produk']) ?></td>
-                <td class="text-center"><?= $row['jumlah_terjual'] ?></td>
-                <td>Rp <?= number_format($row['total_pendapatan'], 0, ',', '.') ?></td>
-            </tr>
-        <?php endwhile; ?>
-        <?php if ($no === 1): ?>
-            <tr><td colspan="4" class="text-center">Tidak ada produk terjual dalam periode ini.</td></tr>
-        <?php endif; ?>
-    </tbody>
-</table>
+                        <h5 class="mb-3">Penjualan Produk</h5>
+                        <table class="table align-middle table-striped table-hover table-bordered">
+                            <thead class="table-secondary text-center align-middle">
+                                <tr>
+                                    <th style="width: 5%;">No</th>
+                                    <th>Nama Produk</th>
+                                    <th style="width: 15%;">Jumlah Terjual</th>
+                                    <th style="width: 20%;">Total Pendapatan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // Hitung nomor urut awal untuk halaman saat ini
+                                $no_urut_awal = ($page - 1) * $limit + 1;
+                                if (mysqli_num_rows($resultProdukTerjualDetail) > 0):
+                                    $no = $no_urut_awal;
+                                    while ($row = mysqli_fetch_assoc($resultProdukTerjualDetail)): ?>
+                                        <tr>
+                                            <td><?= $no++ ?></td>
+                                            <td><?= htmlspecialchars($row['nama_produk']) ?></td>
+                                            <td class="text-center"><?= $row['jumlah_terjual'] ?></td>
+                                            <td>Rp <?= number_format($row['total_pendapatan'], 0, ',', '.') ?></td>
+                                        </tr>
+                                    <?php endwhile;
+                                else: ?>
+                                    <tr><td colspan="4" class="text-center">Tidak ada produk terjual dalam periode ini.</td></tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
 
+                        <?php if ($totalPagesProduk >= 1): ?> <nav aria-label="Page navigation for products">
+                                <ul class="pagination justify-content-center mt-4">
+
+                                    <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                                        <a class="page-link d-flex align-items-center justify-content-center"
+                                        href="?<?= http_build_query(array_merge($_GET, ['page_produk' => $page - 1])) ?>">
+                                            <ion-icon name="chevron-back-outline"></ion-icon>
+                                        </a>
+                                    </li>
+
+                                    <?php for ($i = 1; $i <= $totalPagesProduk; $i++): ?>
+                                        <li class="page-item <?= ($i === $page) ? 'active' : '' ?>">
+                                            <a class="page-link d-flex align-items-center justify-content-center"
+                                            href="?<?= http_build_query(array_merge($_GET, ['page_produk' => $i])) ?>">
+                                                <?= $i ?>
+                                            </a>
+                                        </li>
+                                    <?php endfor; ?>
+
+                                    <li class="page-item <?= ($page >= $totalPagesProduk) ? 'disabled' : '' ?>">
+                                        <a class="page-link d-flex align-items-center justify-content-center"
+                                        href="?<?= http_build_query(array_merge($_GET, ['page_produk' => $page + 1])) ?>">
+                                            <ion-icon name="chevron-forward-outline"></ion-icon>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                     </div>
-                </div>
-
-            </div>
-
-            <div class="card shadow-sm mb-4 mt-5" style="margin-left: 35px;">
-                <h5 class="mb-3 ">Grafik Penjualan Harian</h5>
-                <canvas id="grafikPenjualan" height="150px" width="100%"></canvas>
-            </div>
+                 </div>
+            
+                <!-- Grafik Penjualan -->
+                <!-- <div class="container-fluid px-4">
+                    <div class="card shadow-sm mb-4 mt-5">
+                        <h5 class="mb-3 ">Grafik Penjualan Harian</h5>
+                        <canvas id="grafikPenjualan" height="150px" width="100%"></canvas>
+                    </div>
+                </div> -->
         </main>
     </div>
 

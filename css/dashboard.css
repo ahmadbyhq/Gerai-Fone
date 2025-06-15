@@ -178,6 +178,77 @@ body {
     color: var(--text_dark);
 }
 
+/* Dalam file laporan.css Anda, atau di dalam <style> tag di laporan.php */
+
+:root {
+    /* ... variabel warna yang sudah ada ... */
+    --gray-light-bg: #F8F8F8; /* Latar belakang abu-abu yang sangat muda untuk footer/ikon jika perlu */
+    --gray-medium: #D0D0D0; /* Abu-abu sedang untuk ikon */
+    --text-dark-contrast: #333333; /* Warna teks gelap yang kontras */
+}
+
+
+/* === Styling Card Utama === */
+.cardLaporan {
+    background: white;
+    border-radius: 8px; /* Sesuaikan border-radius agar cocok dengan gambar */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex; /* Jadikan flex container */
+    flex-direction: column; /* Konten di dalamnya akan bertumpuk (content dan label-area) */
+    overflow: hidden; /* Penting untuk border-radius pada footer */
+    /* min-height: 150px; */ /* Anda bisa set min-height di sini jika ingin tinggi kartu minimal tertentu */
+}
+
+.cardLaporan:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* === Styling Konten Utama Kartu (Ikon & Angka) === */
+.cardLaporan-content {
+    flex-grow: 1; /* Biarkan konten ini mengisi sisa ruang vertikal */
+    padding: 15px 20px; /* Padding di sekitar ikon dan angka. Sesuaikan untuk jarak dari tepi. */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Pusatkan ikon dan angka secara vertikal */
+    align-items: center; /* Pusatkan ikon dan angka secara horizontal */
+    text-align: center; /* Pastikan teks juga terpusat */
+}
+
+/* === Styling Ikon === */
+.cardLaporan-icon {
+    font-size: 3.5em; /* Ukuran ikon yang lebih besar */
+    color: var(--gray-medium); /* Warna abu-abu sedang untuk ikon */
+    margin-bottom: 10px; /* Jarak antara ikon dan angka */
+    /* Hapus background-color dan padding di sini jika ingin ikon tanpa kotak berwarna */
+    /* background-color: var(--gray-light-bg); */ /* Opsional: Latar belakang abu-abu muda jika ingin kotak di belakang ikon */
+    /* padding: 10px; */ /* Opsional: Padding jika ada background ikon */
+    /* border-radius: 8px; */ /* Opsional: Border-radius jika ada background ikon */
+}
+
+/* === Styling Nilai Angka === */
+.cardLaporan-value {
+    font-size: 2em; /* Ukuran font angka */
+    font-weight: bold;
+    color: var(--text_dark); /* Warna angka */
+    margin-top: 0; /* Hapus margin default */
+    margin-bottom: 0; /* Hapus margin default */
+    line-height: 1.2; /* Sesuaikan line-height jika angka terlihat terlalu jauh dari label */
+}
+
+/* === Styling Area Label (Footer) === */
+.cardLaporan-label-area {
+    padding: 10px 20px; /* Padding di sekitar label */
+    background-color: var(--gray-light-bg); /* Latar belakang abu-abu muda untuk area label */
+    color: var(--text_dark_contrast); /* Warna teks untuk label agar kontras */
+    text-align: center; /* Pastikan label terpusat */
+    font-size: 0.9em;
+    font-weight: 500;
+    /* Tidak perlu border-top karena background sudah membedakan */
+}
+
 .add-product-btn {
     display: inline-block;
     background-color: var(--button);
