@@ -143,7 +143,7 @@ while ($produk = mysqli_fetch_assoc($resultProduk)) {
                     <a href="transaksi.php?id=<?= $row['id_transaksi'] ?>" class="btn btn-sm btn-outline-primary">
   <ion-icon name="eye-outline"></ion-icon>
 </a>
-                    <a href="#" class="btn btn-sm btn-outline-success"><ion-icon name="create-outline"></ion-icon></a>
+                    <a href="transaksi.php?edit_id=<?= $row['id_transaksi']; ?>" class="btn btn-sm btn-outline-success"><ion-icon name="create-outline"></ion-icon></a>
                     <a href="../../admin/delete/deleteTransaksi.php?id=<?= $row['id_transaksi'] ?>" class="btn btn-sm btn-outline-danger"><ion-icon name="trash-outline"></ion-icon></a>
                   </div>
                 </td>
@@ -245,6 +245,76 @@ while ($produk = mysqli_fetch_assoc($resultProduk)) {
     </form>
   </div>
 </div>
+<?php
+if (isset($_GET['edit_id'])) {
+    $edit_id = $_GET['edit_id'];
+    // Ambil data transaksi
+    $transaksi = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM transaksi WHERE id_transaksi = $edit_id"));
+
+    // Ambil data produk yang termasuk dalam detail transaksi
+    $queryDetail = mysqli_query($conn, "
+        SELECT dt.id_produk, dt.jumlah, p.nama_produk 
+        FROM detail_transaksi dt 
+        JOIN produk p ON dt.id_produk = p.id_produk 
+        WHERE dt.id_transaksi = $edit_id
+    ");
+    $produkTerpilih = [];
+    while ($row = mysqli_fetch_assoc($queryDetail)) {
+        $produkTerpilih[] = $row;
+    }
+}
+?>
+<?php if (isset($_GET['edit_id'])): ?>
+<div class="modal fade show" id="editTransaksiModal" style="display: block;" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <form action="../../admin/update/updateTransaksi.php" method="POST">
+      <input type="hidden" name="id_transaksi" value="<?= $edit_id ?>">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Transaksi #<?= $edit_id ?></h5>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="produk" class="form-label">Produk</label>
+            <div id="produkContainer">
+              <?php foreach ($produkTerpilih as $index => $produk): ?>
+                <div class="row mb-2">
+                  <div class="col-md-8">
+                    <select name="produk[]" class="form-control select2">
+                      <?php
+                      $produkList = mysqli_query($conn, "SELECT * FROM produk");
+                      while ($p = mysqli_fetch_assoc($produkList)):
+                      ?>
+                        <option value="<?= $p['id_produk'] ?>" <?= $p['id_produk'] == $produk['id_produk'] ? 'selected' : '' ?>>
+                          <?= $p['nama_produk'] ?>
+                        </option>
+                      <?php endwhile; ?>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <input type="number" name="jumlah[]" class="form-control" value="<?= $produk['jumlah'] ?>" required>
+                  </div>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="transaksi.php" class="btn btn-secondary">Batal</a>
+          <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Auto show modal via Bootstrap -->
+<script>
+  var myModal = new bootstrap.Modal(document.getElementById('editTransaksiModal'));
+  myModal.show();
+</script>
+<?php endif; ?>
+
 <!-- Modal Detail Transaksi -->
 <div class="modal fade" id="detailTransaksiModal" tabindex="-1" aria-labelledby="detailTransaksiLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
