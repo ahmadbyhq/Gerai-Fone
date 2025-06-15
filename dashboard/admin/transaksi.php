@@ -1,6 +1,35 @@
 <?php
 require_once(__DIR__ . '/../../config/dbConnection.php');
+
+// Ambil ID transaksi dari URL (misalnya transaksi.php?id=7)
+$idTransaksi = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+// Ambil data transaksi berdasarkan ID
+$sqlTransaksi = "SELECT t.id_transaksi, t.tanggal_transaksi, t.total_harga, t.status_pembayaran, 
+                        p.nama_pelanggan, p.no_hp, p.alamat
+                 FROM transaksi t
+                 JOIN pelanggan p ON t.id_pelanggan = p.id_pelanggan
+                 WHERE t.id_transaksi = $idTransaksi";
+$resultTransaksi = mysqli_query($conn, $sqlTransaksi);
+$dataTransaksi = mysqli_fetch_assoc($resultTransaksi);
+
+// Ambil data produk yang dibeli dalam transaksi
+$sqlProduk = "SELECT pr.nama_produk, dt.jumlah, pr.harga_produk, (dt.jumlah * pr.harga_produk) AS subtotal
+              FROM detail_transaksi dt
+              JOIN produk pr ON dt.id_produk = pr.id_produk
+              WHERE dt.id_transaksi = $idTransaksi";
+$resultProduk = mysqli_query($conn, $sqlProduk);
+
+// Menyiapkan data untuk modal
+$produkData = [];
+while ($produk = mysqli_fetch_assoc($resultProduk)) {
+    $produkData[] = $produk;
+}
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -17,13 +46,13 @@ require_once(__DIR__ . '/../../config/dbConnection.php');
 <div class="dashboard-container">
   <aside class="sidebar">
     <div class="sidebar-header">
-      <img src="\img\logo.png" alt="Logo" class="logo-img">
+      <img src="../../img/logo.png" alt="Logo" class="logo-img">
       <span class="logo-text">Geraifone</span>
     </div>
     <nav>
       <a href="dashboard.php"><ion-icon name="grid-outline"></ion-icon> Dashboard</a>
       <a href="produk.php"><ion-icon name="bag-outline"></ion-icon> Produk</a>
-      <a href="pelanggan.php"><ion-icon name="albums-outline"></ion-icon> Pelanggan</a>
+      <a href="aelanggan.php"><ion-icon name="albums-outline"></ion-icon> Pelanggan</a>
       <a href="transaksi.php" class="active"><ion-icon name="cart-outline"></ion-icon> Transaksi</a>
       <a href="laporan.php"><ion-icon name="time-outline"></ion-icon> Laporan Penjualan</a>
       <a href="headnews.php"><ion-icon name="images-outline"></ion-icon> Headnews</a>
@@ -110,9 +139,12 @@ require_once(__DIR__ . '/../../config/dbConnection.php');
                 <td class="text-center"><?= $row['status_pembayaran'] ?></td>
                 <td class="text-center align-middle">
                   <div class='d-flex justify-content-center gap-3'>
-                    <a href="#" class="btn btn-sm btn-outline-primary"><ion-icon name="eye-outline"></ion-icon></a>
+                    <!-- Tombol untuk Menampilkan Modal Detail Transaksi -->
+                    <a href="transaksi.php?id=<?= $row['id_transaksi'] ?>" class="btn btn-sm btn-outline-primary">
+  <ion-icon name="eye-outline"></ion-icon>
+</a>
                     <a href="#" class="btn btn-sm btn-outline-success"><ion-icon name="create-outline"></ion-icon></a>
-                    <a href="../../admin/delete/deleteTransaksi.php?id=<?= $row['id_transaksi'] ?>"class="btn btn-sm btn-outline-danger"><ion-icon name="trash-outline"></ion-icon></a>
+                    <a href="../../admin/delete/deleteTransaksi.php?id=<?= $row['id_transaksi'] ?>" class="btn btn-sm btn-outline-danger"><ion-icon name="trash-outline"></ion-icon></a>
                   </div>
                 </td>
               </tr>
@@ -198,11 +230,11 @@ require_once(__DIR__ . '/../../config/dbConnection.php');
           </div>
 
           <div class="mb-3 mt-3">
-            <label>Status Pembayaran</label>
-            <select name="status_pembayaran" class="form-select" required>
-              <option value="dibayar">Dibayar</option>
-              <option value="belum_dibayar">Belum Dibayar</option>
-            </select>
+              <label>Status Pembayaran</label>
+              <select name="status_pembayaran" class="form-select select2" required>
+                  <option value="dibayar" selected>Dibayar</option>
+                  <option value="belum_dibayar">Belum Dibayar</option>
+              </select>
           </div>
         </div>
         <div class="modal-footer">
@@ -211,6 +243,59 @@ require_once(__DIR__ . '/../../config/dbConnection.php');
         </div>
       </div>
     </form>
+  </div>
+</div>
+<!-- Modal Detail Transaksi -->
+<div class="modal fade" id="detailTransaksiModal" tabindex="-1" aria-labelledby="detailTransaksiLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailTransaksiLabel">Detail Transaksi</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <h6>Informasi Transaksi</h6>
+            <p><strong>ID Transaksi:</strong> <?= $dataTransaksi['id_transaksi'] ?></p>
+            <p><strong>Tanggal:</strong> <?= $dataTransaksi['tanggal_transaksi'] ?></p>
+          </div>
+          <div class="col-md-6">
+            <h6>Informasi Pelanggan</h6>
+            <p><strong>Nama:</strong> <?= $dataTransaksi['nama_pelanggan'] ?></p>
+            <p><strong>No. HP:</strong> <?= $dataTransaksi['no_hp'] ?></p>
+            <p><strong>Alamat:</strong> <?= $dataTransaksi['alamat'] ?></p>
+          </div>
+        </div>
+
+        <h6>Detail Produk</h6>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Produk</th>
+              <th>Harga</th>
+              <th>Jumlah</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($produkData as $produk): ?>
+              <tr>
+                <td><?= $produk['nama_produk'] ?></td>
+                <td>Rp <?= number_format($produk['harga_produk'], 2) ?></td>
+                <td><?= $produk['jumlah'] ?></td>
+                <td>Rp <?= number_format($produk['subtotal'], 2) ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+
+        <p><strong>Total:</strong> Rp <?= number_format($dataTransaksi['total_harga'], 2) ?></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -248,5 +333,11 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 </script>
+<?php if ($idTransaksi > 0 && $dataTransaksi): ?>
+<script>
+  const detailModal = new bootstrap.Modal(document.getElementById('detailTransaksiModal'));
+  detailModal.show();
+</script>
+<?php endif; ?>
 </body>
 </html>

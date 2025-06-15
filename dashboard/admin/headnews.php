@@ -1,6 +1,6 @@
 <?php
 require_once '../../config/dbConnection.php';
-require_once(__DIR__ . '/../../authentication/auth.php');
+//require_once(__DIR__ . '/../../authentication/auth.php');
 
 // Pagination
 $limit = 5;
