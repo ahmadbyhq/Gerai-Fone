@@ -52,10 +52,10 @@ while ($produk = mysqli_fetch_assoc($resultProduk)) {
     <nav>
       <a href="dashboard.php"><ion-icon name="grid-outline"></ion-icon> Dashboard</a>
       <a href="produk.php"><ion-icon name="bag-outline"></ion-icon> Produk</a>
-      <a href="aelanggan.php"><ion-icon name="albums-outline"></ion-icon> Pelanggan</a>
+      <a href="pelanggan.php"><ion-icon name="people-outline"></ion-icon> Pelanggan</a>
       <a href="transaksi.php" class="active"><ion-icon name="cart-outline"></ion-icon> Transaksi</a>
       <a href="laporan.php"><ion-icon name="time-outline"></ion-icon> Laporan Penjualan</a>
-      <a href="headnews.php"><ion-icon name="images-outline"></ion-icon> Headnews</a>
+      <!-- <a href="headnews.php"><ion-icon name="images-outline"></ion-icon> Headnews</a> -->
     </nav>
     <form action="logout.php" method="post" onsubmit="return confirm('Yakin ingin logout?')">
       <button type="submit" class="logout-btn"><ion-icon name="log-out-outline"></ion-icon>Logout</button>

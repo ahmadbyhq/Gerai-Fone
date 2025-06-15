@@ -33,7 +33,7 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                     <ion-icon name="bag-outline"></ion-icon> Produk
                 </a>
                 <a href="pelanggan.php">
-                    <ion-icon name="albums-outline"></ion-icon> Pelanggan
+                    <ion-icon name="people-outline"></ion-icon> Pelanggan
                 </a>
                 <a href="transaksi.php">
                     <ion-icon name="cart-outline"></ion-icon> Transaksi
@@ -41,9 +41,9 @@ require_once(__DIR__ . '/../../authentication/auth.php');
                 <a href="laporan.php">
                     <ion-icon name="time-outline"></ion-icon> Laporan Penjualan
                 </a>
-                <a href="headnews.php">
-                    <ion-icon name="images-outline"></ion-icon> Headnews
-                </a>
+                <!-- <a href="headnews.php"> -->
+                    <!-- <ion-icon name="images-outline"></ion-icon> Headnews
+                </a> -->
             </nav>
             <form action="logout.php" method="post" onsubmit="return confirm('Yakin ingin logout?')"
                 style="width: 100%;">
