@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__ . '/../../config/dbConnection.php');
+require_once(__DIR__ . '/../../authentication/auth.php');
 
 // Ambil ID transaksi dari URL (misalnya transaksi.php?id=7)
 $idTransaksi = isset($_GET['id']) ? (int)$_GET['id'] : 0;
