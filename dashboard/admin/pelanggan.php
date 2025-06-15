@@ -45,7 +45,7 @@ $no = $offset + 1;
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <img src="\img\logo.png" alt="Logo" class="logo-img">
+                <img src="../../img/logo.png" alt="Logo" class="logo-img">
                 <span class="logo-text">Geraifone</span>
             </div>
             <nav>
