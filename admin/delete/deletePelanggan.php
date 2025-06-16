@@ -1,9 +1,8 @@
 <?php
-// Memuat koneksi database dan autentikasi
-require_once(__DIR__ . '/../../config/dbConnection.php');  // Pastikan koneksi database sudah dimuat
-require_once(__DIR__ . '/../../authentication/auth.php');  // Pastikan autentikasi sudah dimuat
 
-// Mengecek apakah parameter 'id' ada di URL
+require_once(__DIR__ . '/../../config/dbConnection.php');  
+require_once(__DIR__ . '/../../authentication/auth.php');  
+
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     // Mendapatkan ID pelanggan yang akan dihapus
     $id_pelanggan = $_GET['id'];

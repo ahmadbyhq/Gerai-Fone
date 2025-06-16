@@ -120,9 +120,9 @@ while ($produk = mysqli_fetch_assoc($resultProduk)) {
                     LIMIT $limit OFFSET $offset";
 
             $countSql = "SELECT COUNT(DISTINCT t.id_transaksi) AS total
-                         FROM transaksi t
-                         JOIN pelanggan p ON t.id_pelanggan = p.id_pelanggan
-                         WHERE p.nama_pelanggan LIKE '%$search%'";
+                        FROM transaksi t
+                        JOIN pelanggan p ON t.id_pelanggan = p.id_pelanggan
+                        WHERE p.nama_pelanggan LIKE '%$search%'";
             $total = mysqli_fetch_assoc(mysqli_query($conn, $countSql))['total'];
             $totalPages = ceil($total / $limit);
 
